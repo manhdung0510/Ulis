@@ -2,11 +2,11 @@ export type ButtonVariant = 'primary' | 'secondary' | 'quiet';
 
 export const buttonVariantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-primary text-[var(--on-primary)] hover:bg-primary-hover border border-transparent shadow-soft',
+    'cursor-pointer bg-primary text-[var(--on-primary)] hover:bg-primary-hover border border-transparent shadow-soft active:translate-y-[0.5px]',
   secondary:
-    'bg-sand text-ink hover:bg-[#E6DCCB] border border-border-strong',
+    'cursor-pointer bg-sand text-ink hover:bg-[#E6DCCB] border border-border-strong shadow-soft active:translate-y-[0.5px]',
   quiet:
-    'bg-transparent text-ink hover:bg-sand/70 border border-transparent',
+    'cursor-pointer bg-paper/70 text-ink hover:bg-sand border border-border-subtle hover:border-border-strong',
 };
 
 export function buttonClasses(variant: ButtonVariant = 'primary', className = ''): string {

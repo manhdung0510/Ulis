@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
+import { CalendarIcon } from '@/components/ui/Icons';
 import { Tag } from '@/components/ui/Tag';
 import type { CounselorProfile } from '@/types/domain';
 
@@ -61,7 +62,8 @@ export function CounselorsTab({
             className="w-full"
             onClick={() => onSelectForBooking(counselor.id)}
           >
-            {t('consult.bookWithCounselor')}
+            <CalendarIcon size={16} />
+            <span>{t('consult.bookWithCounselor')}</span>
           </Button>
         </Card>
       ))}

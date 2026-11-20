@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import { CheckIcon } from './Icons';
 
 export interface ChoiceOption {
   value: string;
@@ -23,6 +24,7 @@ export interface MultiChoiceProps extends ChoiceBaseProps {
   mode: 'multi';
   value: string[];
   onChange: (value: string[]) => void;
+  maxSelections?: number;
 }
 
 export type ChoiceProps = SingleChoiceProps | MultiChoiceProps;
@@ -36,6 +38,9 @@ export function Choice(props: ChoiceProps) {
     if (props.value.includes(optionValue)) {
       props.onChange(props.value.filter((item) => item !== optionValue));
     } else {
+      if (props.maxSelections && props.value.length >= props.maxSelections) {
+        return;
+      }
       props.onChange([...props.value, optionValue]);
     }
   };
@@ -46,15 +51,23 @@ export function Choice(props: ChoiceProps) {
         {options.map((option) => {
           const checked =
             mode === 'single' ? props.value === option.value : props.value.includes(option.value);
+          const limitReached =
+            mode === 'multi' &&
+            Boolean(props.maxSelections) &&
+            props.value.length >= (props.maxSelections ?? 0) &&
+            !checked;
 
           return (
             <label
               key={option.value}
               className={[
-                'flex min-h-[48px] cursor-pointer items-start gap-3 rounded-sm border p-3.5 transition-colors duration-150',
-                checked
-                  ? 'border-primary bg-primary-soft/65'
-                  : 'border-border-subtle bg-surface hover:border-border-strong',
+                'flex min-h-[52px] items-start gap-3 rounded-sm border p-3.5 transition-all duration-150',
+                'focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2',
+                limitReached
+                  ? 'cursor-not-allowed border-border-subtle bg-sand/40 opacity-60'
+                  : checked
+                    ? 'cursor-pointer border-primary bg-primary-soft/75 shadow-soft'
+                    : 'cursor-pointer border-border-strong/60 bg-surface shadow-soft hover:border-primary/70 hover:bg-sand/35',
               ].join(' ')}
             >
               <input
@@ -62,6 +75,7 @@ export function Choice(props: ChoiceProps) {
                 name={name}
                 value={option.value}
                 checked={checked}
+                disabled={limitReached}
                 onChange={() => {
                   if (mode === 'single') {
                     props.onChange(option.value);
@@ -69,9 +83,27 @@ export function Choice(props: ChoiceProps) {
                     toggleMulti(option.value);
                   }
                 }}
-                className="mt-1 h-4 w-4 shrink-0 accent-[var(--accent-primary)]"
+                className="sr-only"
               />
-              <span className="space-y-1">
+              <span
+                aria-hidden="true"
+                className={[
+                  'mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border transition-colors',
+                  mode === 'single' ? 'rounded-full' : 'rounded-[5px]',
+                  checked
+                    ? 'border-primary bg-primary text-[var(--on-primary)]'
+                    : 'border-border-strong bg-paper text-transparent',
+                ].join(' ')}
+              >
+                {mode === 'single' ? (
+                  <span
+                    className={`h-2 w-2 rounded-full ${checked ? 'bg-[var(--on-primary)]' : 'bg-transparent'}`}
+                  />
+                ) : (
+                  <CheckIcon size={13} />
+                )}
+              </span>
+              <span className="flex-1 space-y-1">
                 <span className="block text-sm font-medium text-ink">{option.label}</span>
                 {option.description && (
                   <span className="block text-sm text-muted">{option.description}</span>

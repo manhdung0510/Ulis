@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Dialog } from '@/components/ui/Dialog';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { CalendarIcon, TrashIcon } from '@/components/ui/Icons';
 import { Tag } from '@/components/ui/Tag';
 import { formatDisplayDate, getDateKeyInAppTz } from '@/utils/date';
 import { downloadAppointmentIcs } from '@/utils/ics';
@@ -103,14 +104,16 @@ export function AppointmentsTab({
                 onClick={() => downloadAppointmentIcs(item, lang)}
                 className="!px-3 text-xs"
               >
-                {t('consult.downloadIcs')}
+                <CalendarIcon size={15} />
+                <span>{t('consult.downloadIcs')}</span>
               </Button>
               <Button
                 variant="quiet"
                 onClick={() => setCancelTarget(item)}
                 className="!px-3 text-xs text-primary"
               >
-                {t('consult.cancelAppointment')}
+                <TrashIcon size={15} />
+                <span>{t('consult.cancelAppointment')}</span>
               </Button>
             </>
           ) : (
@@ -119,7 +122,8 @@ export function AppointmentsTab({
               onClick={() => onRebook(item)}
               className="!px-3 text-xs"
             >
-              {t('consult.rebookAppointment')}
+              <CalendarIcon size={15} />
+              <span>{t('consult.rebookAppointment')}</span>
             </Button>
           )}
         </div>
@@ -134,7 +138,7 @@ export function AppointmentsTab({
           <h2 className="font-serif text-xl font-semibold text-ink">
             {t('consult.upcomingAppointments')}
           </h2>
-          <ul className="space-y-3">{upcoming.map((item) => renderCard(item, true))}</ul>
+          <ul className="grid gap-4 md:grid-cols-2">{upcoming.map((item) => renderCard(item, true))}</ul>
         </section>
       )}
 
@@ -143,7 +147,9 @@ export function AppointmentsTab({
           <h2 className="font-serif text-xl font-semibold text-ink">
             {t('consult.pastAppointments')}
           </h2>
-          <ul className="space-y-3">{pastOrCancelled.map((item) => renderCard(item, false))}</ul>
+          <ul className="grid gap-4 md:grid-cols-2">
+            {pastOrCancelled.map((item) => renderCard(item, false))}
+          </ul>
         </section>
       )}
 

@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Dialog } from '@/components/ui/Dialog';
+import { CalendarIcon, CheckIcon } from '@/components/ui/Icons';
 import { Stepper } from '@/components/ui/Stepper';
 import { Tag } from '@/components/ui/Tag';
 import { TextArea } from '@/components/ui/TextArea';
@@ -184,7 +185,8 @@ export function BookingDialog({
               variant="secondary"
               onClick={() => downloadAppointmentIcs(confirmed, lang)}
             >
-              {t('consult.downloadIcs')}
+              <CalendarIcon size={16} />
+              <span>{t('consult.downloadIcs')}</span>
             </Button>
             <Button
               variant="quiet"
@@ -338,10 +340,10 @@ export function BookingDialog({
                       type="button"
                       onClick={() => setDateKey(dKey)}
                       className={[
-                        'flex min-h-[56px] flex-col items-start justify-center rounded-sm border px-3 py-2 text-left text-xs transition-colors',
+                        'flex min-h-[56px] cursor-pointer flex-col items-start justify-center rounded-sm border px-3 py-2 text-left text-xs shadow-soft transition-all',
                         active
                           ? 'border-primary bg-primary text-[var(--on-primary)]'
-                          : 'border-border-subtle bg-paper text-ink hover:border-border-strong',
+                          : 'border-border-strong/60 bg-paper text-ink hover:border-primary/70 hover:bg-sand/45',
                       ].join(' ')}
                     >
                       <span className="font-semibold uppercase">
@@ -377,15 +379,18 @@ export function BookingDialog({
                         disabled={disabled}
                         onClick={() => setSlotTime(slot.time)}
                         className={[
-                          'flex min-h-[56px] flex-col items-center justify-center gap-0.5 rounded-sm border px-3 py-2 text-sm transition-colors',
+                          'flex min-h-[56px] flex-col items-center justify-center gap-0.5 rounded-sm border px-3 py-2 text-sm transition-all',
                           disabled
                             ? 'cursor-not-allowed border-border-subtle bg-sand/70 text-muted opacity-75'
                             : selected
-                              ? 'border-primary bg-primary text-[var(--on-primary)]'
-                              : 'border-border-subtle bg-paper text-ink hover:border-border-strong',
+                              ? 'cursor-pointer border-primary bg-primary text-[var(--on-primary)] shadow-soft'
+                              : 'cursor-pointer border-border-strong/60 bg-paper text-ink shadow-soft hover:border-primary/70 hover:bg-sand/45',
                         ].join(' ')}
                       >
-                        <span className="font-semibold">{slot.time}</span>
+                        <span className="inline-flex items-center gap-1 font-semibold">
+                          {selected && <CheckIcon size={14} />}
+                          <span>{slot.time}</span>
+                        </span>
                         <span className="text-[11px]">
                           {slot.status === 'full'
                             ? t('consult.slotFull')

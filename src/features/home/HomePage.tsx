@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { buttonClasses } from '@/components/ui/buttonStyles';
 import { Card } from '@/components/ui/Card';
-import { Tag } from '@/components/ui/Tag';
+import { ArrowRightIcon, ClockIcon } from '@/components/ui/Icons';
 import { EmotionIcon } from '@/components/illustration/EmotionIcons';
 import { Illustration } from '@/components/illustration/Illustration';
 import { InkDivider } from '@/components/illustration/InkDivider';
@@ -45,7 +45,7 @@ export default function HomePage() {
   return (
     <div className="space-y-8">
       {/* Hero section */}
-      <section className="grid items-center gap-6 md:grid-cols-[1.25fr_0.9fr]">
+      <section className="grid items-center gap-6 lg:grid-cols-[1.2fr_0.8fr]">
         <div className="space-y-4">
           <h1 className="font-serif text-3xl font-semibold leading-tight text-ink sm:text-4xl">
             {t('home.title')}
@@ -53,11 +53,14 @@ export default function HomePage() {
           <p className="max-w-xl text-base leading-relaxed text-muted">
             {t('home.subtitle')}
           </p>
-          <div className="pt-1">
-            <Link to="/check-in" className={buttonClasses('primary', 'px-6 text-base')}>
-              {todayCheckin ? t('home.updateCheckin') : t('home.primaryCta')}
-            </Link>
-          </div>
+          {!todayCheckin && (
+            <div className="pt-1">
+              <Link to="/check-in" className={buttonClasses('primary', 'px-6 text-base')}>
+                <span>{t('home.primaryCta')}</span>
+                <ArrowRightIcon size={17} />
+              </Link>
+            </div>
+          )}
         </div>
 
         <Illustration
@@ -113,21 +116,22 @@ export default function HomePage() {
                 <p className="text-xs font-medium text-muted">
                   {t('home.suggestedExercisesTitle')}
                 </p>
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="grid gap-3 md:grid-cols-2">
                   {suggestedIds.map((exId) => {
                     const meta = exercisesMeta.items[exId];
                     return (
                       <div
                         key={exId}
-                        className="flex flex-col justify-between gap-3 rounded-sm border border-border-subtle bg-surface p-3.5"
+                        className="flex flex-col justify-between gap-3 rounded-sm border border-border-subtle bg-surface p-4"
                       >
                         <div className="space-y-1">
                           <div className="flex items-center justify-between gap-2">
                             <h3 className="font-serif text-base font-semibold text-ink">
                               {meta.title}
                             </h3>
-                            <span className="shrink-0 text-xs text-muted">
-                              {t('common.minutesShort', { minutes: meta.estimatedMinutes })}
+                            <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted">
+                              <ClockIcon size={13} />
+                              <span>{t('common.minutesShort', { minutes: meta.estimatedMinutes })}</span>
                             </span>
                           </div>
                           <p className="text-xs leading-relaxed text-muted">
@@ -137,9 +141,10 @@ export default function HomePage() {
                         <div>
                           <Link
                             to={`/bai-tap/${exId}`}
-                            className={buttonClasses('quiet', '!px-3 text-xs text-primary')}
+                            className={buttonClasses('primary', '!px-3.5 text-xs')}
                           >
-                            {t('home.startExercise')}
+                            <span>{t('home.startExercise')}</span>
+                            <ArrowRightIcon size={15} />
                           </Link>
                         </div>
                       </div>
@@ -154,67 +159,69 @@ export default function HomePage() {
 
       <InkDivider />
 
-      {/* Three purposeful entry points (non-uniform layout) */}
-      <section aria-label={t('nav.home')} className="space-y-4">
-        <Card tone="sand" className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
-          <div className="space-y-1">
+      {/* Three distinct entry points on desktop (no duplicate Check-in CTA) */}
+      <section aria-label={t('nav.home')} className="grid gap-4 lg:grid-cols-[1.25fr_1fr_0.95fr]">
+        <Card tone="surface" className="flex flex-col justify-between gap-4">
+          <div className="space-y-2">
             <h2 className="font-serif text-xl font-semibold text-ink">
-              {t('home.entryCheckinTitle')}
+              {t('home.entryExercisesTitle')}
             </h2>
-            <p className="max-w-xl text-sm text-muted">{t('home.entryCheckinDesc')}</p>
+            <p className="text-sm leading-relaxed text-muted">
+              {t('home.entryExercisesDesc')}
+            </p>
           </div>
-          <Link to="/check-in" className={buttonClasses('secondary', 'shrink-0')}>
-            {t('home.entryCheckinAction')}
-          </Link>
+          <div>
+            <Link to="/bai-tap" className={buttonClasses('primary')}>
+              <span>{t('home.entryExercisesAction')}</span>
+              <ArrowRightIcon size={16} />
+            </Link>
+          </div>
         </Card>
 
-        <div className="grid gap-4 md:grid-cols-[1.2fr_1fr]">
-          <Card tone="surface" className="flex flex-col justify-between gap-4">
-            <div className="space-y-2">
-              <h2 className="font-serif text-xl font-semibold text-ink">
-                {t('home.entryExercisesTitle')}
-              </h2>
-              <p className="text-sm leading-relaxed text-muted">
-                {t('home.entryExercisesDesc')}
-              </p>
-            </div>
-            <div>
-              <Link to="/bai-tap" className={buttonClasses('primary')}>
-                {t('home.entryExercisesAction')}
-              </Link>
-            </div>
-          </Card>
+        <Card tone="sand" className="flex flex-col justify-between gap-4">
+          <div className="space-y-2">
+            <h2 className="font-serif text-xl font-semibold text-ink">
+              {t('home.entryConsultTitle')}
+            </h2>
+            <p className="text-sm leading-relaxed text-muted">
+              {t('home.entryConsultDesc')}
+            </p>
+          </div>
+          <div>
+            <Link to="/tham-van" className={buttonClasses('secondary')}>
+              <span>{t('home.entryConsultAction')}</span>
+              <ArrowRightIcon size={16} />
+            </Link>
+          </div>
+        </Card>
 
-          <Card tone="paper" className="flex flex-col justify-between gap-4 border-dashed border-border-strong">
-            <div className="space-y-2">
-              <Tag tone="secondary">{t('common.sampleTag')}</Tag>
-              <h2 className="font-serif text-xl font-semibold text-ink">
-                {t('home.entryConsultTitle')}
-              </h2>
-              <p className="text-sm leading-relaxed text-muted">
-                {t('home.entryConsultDesc')}
-              </p>
-            </div>
-            <div>
-              <Link to="/tham-van" className={buttonClasses('secondary')}>
-                {t('home.entryConsultAction')}
-              </Link>
-            </div>
-          </Card>
-        </div>
+        <Card tone="paper" className="flex flex-col justify-between gap-4 border-border-strong/60">
+          <div className="space-y-2">
+            <h2 className="font-serif text-xl font-semibold text-ink">
+              {t('home.entryJournalTitle')}
+            </h2>
+            <p className="text-sm leading-relaxed text-muted">
+              {t('home.entryJournalDesc')}
+            </p>
+          </div>
+          <div>
+            <Link to="/nhat-ky" className={buttonClasses('quiet')}>
+              <span>{t('home.entryJournalAction')}</span>
+              <ArrowRightIcon size={16} />
+            </Link>
+          </div>
+        </Card>
       </section>
 
       {/* Notebook + Web companion block */}
       <section className="space-y-4 pt-2">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-serif text-2xl font-semibold text-ink">
             {t('home.notebookBlockTitle')}
           </h2>
-          <Link
-            to="/huong-dan"
-            className="inline-flex min-h-[44px] items-center text-sm font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
-          >
-            {t('home.notebookBlockLink')}
+          <Link to="/huong-dan" className={buttonClasses('quiet', 'text-primary')}>
+            <span>{t('home.notebookBlockLink')}</span>
+            <ArrowRightIcon size={15} />
           </Link>
         </div>
 

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { Dialog } from '@/components/ui/Dialog';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { ArrowRightIcon, LockIcon, PlusIcon, TrashIcon } from '@/components/ui/Icons';
 import { Tag } from '@/components/ui/Tag';
 import { exercisesMetaVi } from '@/content/vi/exercisesMeta';
 import { exercisesMetaEn } from '@/content/en/exercisesMeta';
@@ -58,7 +59,11 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('consult.questionTopicLabel')}>
+        <div
+          className="flex flex-wrap gap-1.5"
+          role="group"
+          aria-label={t('consult.questionTopicLabel')}
+        >
           <Button
             variant={filter === 'all' ? 'primary' : 'quiet'}
             aria-pressed={filter === 'all'}
@@ -86,7 +91,8 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
         </div>
 
         <Button variant="primary" onClick={onOpenAsk}>
-          {t('consult.askButton')}
+          <PlusIcon size={16} />
+          <span>{t('consult.askButton')}</span>
         </Button>
       </div>
 
@@ -96,12 +102,13 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
           body={filter === 'mine' ? t('consult.emptyMineBody') : t('consult.emptyTopicBody')}
           action={
             <Button variant="primary" onClick={onOpenAsk}>
-              {t('consult.askButton')}
+              <PlusIcon size={16} />
+              <span>{t('consult.askButton')}</span>
             </Button>
           }
         />
       ) : (
-        <ul className="space-y-4">
+        <ul className="grid gap-4 lg:grid-cols-2">
           {visiblePosts.map((rawPost) => {
             const resolved = resolveConsultPostForDisplay(rawPost, lang, nowMs);
             const post = resolved.post;
@@ -111,56 +118,64 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
 
             return (
               <li key={post.id}>
-                <Card tone="surface" className="space-y-4">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Tag tone="neutral">{t(`consult.topics.${post.topic}`)}</Tag>
-                      {resolved.replyReady ? (
-                        <Tag tone="secondary">{t('consult.statusReplied')}</Tag>
-                      ) : (
-                        <Tag tone="primary">{t('consult.statusPending')}</Tag>
-                      )}
+                <Card tone="surface" className="flex h-full flex-col justify-between gap-4">
+                  <div className="space-y-4">
+                    <div className="flex flex-wrap items-start justify-between gap-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <Tag tone="neutral">{t(`consult.topics.${post.topic}`)}</Tag>
+                        {resolved.replyReady ? (
+                          <Tag tone="secondary">{t('consult.statusReplied')}</Tag>
+                        ) : (
+                          <Tag tone="primary">{t('consult.statusPending')}</Tag>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted">
+                        {formatDisplayDate(post.createdAt, lang, true)}
+                      </span>
                     </div>
-                    <span className="text-xs text-muted">
-                      {formatDisplayDate(post.createdAt, lang, true)}
-                    </span>
-                  </div>
 
-                  <div className="space-y-1.5">
-                    <h2 className="font-serif text-lg font-semibold text-ink">{post.title}</h2>
-                    <p className="text-xs font-medium text-muted">{resolved.authorLabel}</p>
-                    <p className="text-sm leading-relaxed text-ink whitespace-pre-wrap">
-                      {post.content}
-                    </p>
-                  </div>
+                    <div className="space-y-1.5">
+                      <h2 className="font-serif text-lg font-semibold text-ink">{post.title}</h2>
+                      <p className="inline-flex items-center gap-1.5 text-xs font-medium text-muted">
+                        {post.isAnonymous && <LockIcon size={13} />}
+                        <span>{resolved.authorLabel}</span>
+                      </p>
+                      <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink">
+                        {post.content}
+                      </p>
+                    </div>
 
-                  {resolved.replyReady && resolved.reply && (
-                    <div className="space-y-2.5 rounded-sm border border-secondary/30 bg-secondary-soft/50 p-4">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
+                    {resolved.replyReady && resolved.reply && (
+                      <div className="space-y-2.5 rounded-sm border border-secondary/30 bg-secondary-soft/50 p-4">
                         <p className="text-xs font-semibold text-secondary">
                           {resolved.reply.counselorName}
                         </p>
-                        <span className="text-xs text-muted">{t('common.sampleTag')}</span>
+                        <p className="text-sm leading-relaxed text-ink">{resolved.reply.content}</p>
+                        {suggestedMeta && resolved.reply.suggestedExerciseId && (
+                          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                            <span className="text-muted">{t('consult.tryExerciseLabel')}</span>
+                            <Link
+                              to={`/bai-tap/${resolved.reply.suggestedExerciseId}`}
+                              className="inline-flex min-h-[32px] items-center gap-1 font-semibold text-primary underline underline-offset-4 hover:text-primary-hover"
+                            >
+                              <span>{suggestedMeta.title}</span>
+                              <ArrowRightIcon size={14} />
+                            </Link>
+                          </div>
+                        )}
                       </div>
-                      <p className="text-sm leading-relaxed text-ink">{resolved.reply.content}</p>
-                      {suggestedMeta && resolved.reply.suggestedExerciseId && (
-                        <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-                          <span className="text-muted">{t('consult.tryExerciseLabel')}</span>
-                          <Link
-                            to={`/bai-tap/${resolved.reply.suggestedExerciseId}`}
-                            className="font-semibold text-primary underline underline-offset-4 hover:text-primary-hover"
-                          >
-                            {suggestedMeta.title}
-                          </Link>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   {post.isMine && (
                     <div className="flex justify-end border-t border-border-subtle pt-3">
-                      <Button variant="quiet" onClick={() => setDeleteId(post.id)}>
-                        {t('common.delete')}
+                      <Button
+                        variant="quiet"
+                        onClick={() => setDeleteId(post.id)}
+                        className="text-xs text-primary"
+                      >
+                        <TrashIcon size={15} />
+                        <span>{t('common.delete')}</span>
                       </Button>
                     </div>
                   )}

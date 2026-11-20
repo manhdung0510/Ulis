@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonStyles';
 import { Card } from '@/components/ui/Card';
 import { DemoNotice } from '@/components/ui/DemoNotice';
+import { ArrowRightIcon, ChevronDownIcon, ClockIcon } from '@/components/ui/Icons';
 import { Tag } from '@/components/ui/Tag';
 import { InkDivider } from '@/components/illustration/InkDivider';
 import { FEATURES } from '@/config/features';
@@ -75,8 +76,9 @@ export default function ExercisesPage() {
                     {!hasCompleted && <Tag tone="secondary">{t('common.newTag')}</Tag>}
                     {hasDraft && <Tag tone="primary">{t('exercises.draftFound')}</Tag>}
                   </div>
-                  <span className="text-xs text-muted">
-                    {t('common.minutesShort', { minutes: meta.estimatedMinutes })}
+                  <span className="inline-flex items-center gap-1 text-xs text-muted">
+                    <ClockIcon size={13} />
+                    <span>{t('common.minutesShort', { minutes: meta.estimatedMinutes })}</span>
                   </span>
                 </div>
 
@@ -87,7 +89,8 @@ export default function ExercisesPage() {
 
               <div>
                 <Link to={`/bai-tap/${id}`} className={buttonClasses('primary')}>
-                  {hasDraft ? t('exercises.continueDraft') : t('exercises.openExercise')}
+                  <span>{hasDraft ? t('exercises.continueDraft') : t('exercises.openExercise')}</span>
+                  <ArrowRightIcon size={16} />
                 </Link>
               </div>
             </Card>
@@ -107,7 +110,10 @@ export default function ExercisesPage() {
             aria-expanded={distortionsOpen}
             onClick={() => setDistortionsOpen((prev) => !prev)}
           >
-            {distortionsOpen ? t('common.collapseExample') : t('common.expandExample')}
+            <span>
+              {distortionsOpen ? t('exercises.hideDistortions') : t('exercises.showDistortions')}
+            </span>
+            <ChevronDownIcon size={16} rotated={distortionsOpen} />
           </Button>
         </div>
 

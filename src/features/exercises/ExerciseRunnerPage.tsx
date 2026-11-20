@@ -95,10 +95,12 @@ export default function ExerciseRunnerPage() {
   };
 
   const handleUpdateAnswer = (key: string, value: ExerciseAnswers[string]) => {
-    const next = { ...answers, [key]: value };
-    setAnswers(next);
     setStepError('');
-    persistDraft(next, stepIndex);
+    setAnswers((prev) => {
+      const next = { ...prev, [key]: value };
+      persistDraft(next, stepIndex);
+      return next;
+    });
   };
 
   const handleResumeDraft = () => {

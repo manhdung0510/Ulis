@@ -6,6 +6,7 @@ import { buttonClasses } from '@/components/ui/buttonStyles';
 import { Card } from '@/components/ui/Card';
 import { Dialog } from '@/components/ui/Dialog';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { EyeIcon, TrashIcon } from '@/components/ui/Icons';
 import { Tabs, type TabItem } from '@/components/ui/Tabs';
 import { Tag } from '@/components/ui/Tag';
 import { useToast } from '@/components/ui/useToast';
@@ -154,57 +155,61 @@ export default function JournalPage() {
           }
         />
       ) : (
-        <ul className="space-y-3">
+        <ul className="grid gap-4 md:grid-cols-2">
           {timeline.map((item) => {
             if (item.kind === 'checkin') {
               const mood = item.data;
               return (
                 <li key={item.id}>
-                  <Card tone="surface" className="space-y-3">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="flex items-start gap-3">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border-subtle bg-sand text-primary">
-                          <EmotionIcon
-                            emotion={mood.emotion}
-                            label={t(`emotions.${mood.emotion}`)}
-                            size={22}
-                          />
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <Tag tone="secondary">{t('journal.typeCheckin')}</Tag>
-                            <span className="text-xs text-muted">
-                              {formatDisplayDate(mood.dateKey, lang)}
-                            </span>
+                  <Card tone="surface" className="flex h-full flex-col justify-between gap-3">
+                    <div className="space-y-3">
+                      <div className="flex flex-wrap items-start justify-between gap-3">
+                        <div className="flex items-start gap-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-sm border border-border-subtle bg-sand text-primary">
+                            <EmotionIcon
+                              emotion={mood.emotion}
+                              label={t(`emotions.${mood.emotion}`)}
+                              size={22}
+                            />
                           </div>
-                          <h2 className="font-serif text-lg font-semibold text-ink">
-                            {t(`emotions.${mood.emotion}`)} ·{' '}
-                            <span className="font-sans text-sm font-normal text-muted">
-                              {t('home.todayIntensity', { level: mood.intensity })}
-                            </span>
-                          </h2>
+                          <div className="space-y-1">
+                            <div className="flex flex-wrap items-center gap-2">
+                              <Tag tone="secondary">{t('journal.typeCheckin')}</Tag>
+                              <span className="text-xs text-muted">
+                                {formatDisplayDate(mood.dateKey, lang)}
+                              </span>
+                            </div>
+                            <h2 className="font-serif text-lg font-semibold text-ink">
+                              {t(`emotions.${mood.emotion}`)} ·{' '}
+                              <span className="font-sans text-sm font-normal text-muted">
+                                {t('home.todayIntensity', { level: mood.intensity })}
+                              </span>
+                            </h2>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="flex flex-wrap gap-2">
-                        <Button
-                          variant="secondary"
-                          onClick={() => setSelectedItem(item)}
-                          className="!px-3 text-xs"
-                        >
-                          {t('journal.viewDetail')}
-                        </Button>
-                        <Button
-                          variant="quiet"
-                          onClick={() => setItemToDelete(item)}
-                          className="!px-3 text-xs text-primary"
-                        >
-                          {t('journal.deleteItem')}
-                        </Button>
-                      </div>
+                      {mood.note && <p className="line-clamp-2 text-sm text-muted">{mood.note}</p>}
                     </div>
 
-                    {mood.note && <p className="line-clamp-2 text-sm text-muted">{mood.note}</p>}
+                    <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-3">
+                      <Button
+                        variant="secondary"
+                        onClick={() => setSelectedItem(item)}
+                        className="!px-3 text-xs"
+                      >
+                        <EyeIcon size={15} />
+                        <span>{t('journal.viewDetail')}</span>
+                      </Button>
+                      <Button
+                        variant="quiet"
+                        onClick={() => setItemToDelete(item)}
+                        className="!px-3 text-xs text-primary"
+                      >
+                        <TrashIcon size={15} />
+                        <span>{t('journal.deleteItem')}</span>
+                      </Button>
+                    </div>
                   </Card>
                 </li>
               );
@@ -220,37 +225,36 @@ export default function JournalPage() {
 
             return (
               <li key={item.id}>
-                <Card tone="surface" className="space-y-3">
-                  <div className="flex flex-wrap items-start justify-between gap-3">
-                    <div className="space-y-1">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <Tag tone="primary">{t('journal.typeExercise')}</Tag>
-                        <span className="text-xs text-muted">
-                          {formatDisplayDate(entry.createdAt, lang, true)}
-                        </span>
-                      </div>
-                      <h2 className="font-serif text-lg font-semibold text-ink">{meta.title}</h2>
+                <Card tone="surface" className="flex h-full flex-col justify-between gap-3">
+                  <div className="space-y-2">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <Tag tone="primary">{t('journal.typeExercise')}</Tag>
+                      <span className="text-xs text-muted">
+                        {formatDisplayDate(entry.createdAt, lang, true)}
+                      </span>
                     </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      <Button
-                        variant="secondary"
-                        onClick={() => setSelectedItem(item)}
-                        className="!px-3 text-xs"
-                      >
-                        {t('journal.viewDetail')}
-                      </Button>
-                      <Button
-                        variant="quiet"
-                        onClick={() => setItemToDelete(item)}
-                        className="!px-3 text-xs text-primary"
-                      >
-                        {t('journal.deleteItem')}
-                      </Button>
-                    </div>
+                    <h2 className="font-serif text-lg font-semibold text-ink">{meta.title}</h2>
+                    {preview && <p className="line-clamp-2 text-sm text-muted">{preview}</p>}
                   </div>
 
-                  {preview && <p className="line-clamp-2 text-sm text-muted">{preview}</p>}
+                  <div className="flex flex-wrap gap-2 border-t border-border-subtle pt-3">
+                    <Button
+                      variant="secondary"
+                      onClick={() => setSelectedItem(item)}
+                      className="!px-3 text-xs"
+                    >
+                      <EyeIcon size={15} />
+                      <span>{t('journal.viewDetail')}</span>
+                    </Button>
+                    <Button
+                      variant="quiet"
+                      onClick={() => setItemToDelete(item)}
+                      className="!px-3 text-xs text-primary"
+                    >
+                      <TrashIcon size={15} />
+                      <span>{t('journal.deleteItem')}</span>
+                    </Button>
+                  </div>
                 </Card>
               </li>
             );

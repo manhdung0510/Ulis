@@ -155,17 +155,19 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
 
     render(<App />);
 
-    expect(await screen.findByRole('heading', { name: 'Cổng tham vấn ULIS (mô phỏng)' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Cổng tham vấn ULIS' })).toBeInTheDocument();
     expect(screen.getByText('Bản demo: nội dung không được gửi tới giảng viên thật.')).toBeInTheDocument();
 
     // Empty state on "Bài của tôi" filter before posting
     fireEvent.click(screen.getByRole('button', { name: 'Bài của tôi' }));
-    expect(await screen.findByText('Chưa có câu hỏi nào trong mục này.')).toBeInTheDocument();
+    expect(
+      await screen.findByText(/Bạn chưa đăng câu hỏi nào trên thiết bị này/)
+    ).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Tất cả chủ đề' }));
 
     // Ask question flow
     fireEvent.click(await screen.findByRole('button', { name: 'Đặt câu hỏi' }));
-    expect(await screen.findByText('Đặt câu hỏi tham vấn (mô phỏng)')).toBeInTheDocument();
+    expect(await screen.findByText('Đặt câu hỏi tham vấn')).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText(/Tiêu đề ngắn gọn/), {
       target: { value: 'Áp lực trước kỳ thi nói' },
     });
@@ -174,7 +176,7 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
     });
     fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
     expect(await screen.findByText('Kiểm tra lại trước khi đăng')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Đăng câu hỏi (demo)' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Đăng câu hỏi' }));
     await waitFor(() => {
       expect(screen.queryByText('Kiểm tra lại trước khi đăng')).not.toBeInTheDocument();
     });
@@ -184,12 +186,12 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
 
     // Switch to Counselors tab & book a session
     fireEvent.click(screen.getByRole('tab', { name: 'Giảng viên' }));
-    expect(await screen.findByText('Cô Minh Thư (mẫu)')).toBeInTheDocument();
+    expect(await screen.findByText('Cô Minh Thư')).toBeInTheDocument();
     const bookButtons = screen.getAllByRole('button', { name: 'Đặt lịch' });
     fireEvent.click(bookButtons[0]!);
 
     // Step 2 (date pre-selected from counselor card)
-    expect(await screen.findByText('Đặt lịch hẹn 1-1 (mô phỏng)')).toBeInTheDocument();
+    expect(await screen.findByText('Đặt lịch hẹn 1-1')).toBeInTheDocument();
     fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
 
     // Step 3: pick first available slot
@@ -205,9 +207,9 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
       target: { value: 'thaovy@example.com' },
     });
     fireEvent.click(screen.getByLabelText(/Mình hiểu đây là bản demo/));
-    fireEvent.click(screen.getByRole('button', { name: 'Xác nhận đặt lịch (demo)' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Xác nhận đặt lịch' }));
 
-    expect(await screen.findByText('Đã lưu lịch hẹn mô phỏng')).toBeInTheDocument();
+    expect(await screen.findByText('Đã lưu lịch hẹn')).toBeInTheDocument();
     expect(screen.getByText(/^HOA-[A-Z0-9]{6}$/)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Tải lịch hẹn (.ics)' })).toBeInTheDocument();
 
@@ -218,7 +220,7 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
     const langBtn = screen.getByRole('button', { name: /Ngôn ngữ/ });
     fireEvent.click(langBtn);
     expect(
-      await screen.findByRole('heading', { name: 'ULIS Consultation Portal (demo)' })
+      await screen.findByRole('heading', { name: 'ULIS Consultation Portal' })
     ).toBeInTheDocument();
     expect(document.documentElement.lang).toBe('en');
 
@@ -230,6 +232,71 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
     expect(screen.getByText('Medical Emergency 115')).toBeInTheDocument();
     expect(screen.getByText('National Child Protection Helpline 111')).toBeInTheDocument();
     expect(vi.isFakeTimers()).toBe(false);
+    expect(capturedErrors).toHaveLength(0);
+    expect(capturedWarnings).toHaveLength(0);
+  });
+
+  it('allows selecting an emotion group in step 1 of emotion-awareness and completing the flow', async () => {
+    window.localStorage.setItem(
+      'hoa-demo:v1',
+      JSON.stringify({
+        version: 1,
+        language: 'vi',
+        onboardingDismissed: true,
+        moodCheckins: [],
+        exerciseEntries: [],
+        exerciseDrafts: {},
+        consultPosts: [],
+        appointments: [],
+      })
+    );
+    window.location.hash = '#/bai-tap/emotion-awareness';
+
+    render(<App />);
+
+    expect(
+      await screen.findByRole('heading', { name: '1. Chọn nhóm cảm xúc gần với bạn nhất' })
+    ).toBeInTheDocument();
+
+    // Select emotion group in Step 1 (previously broken by stale closure state overwrite)
+    const groupRadio = screen.getByRole('radio', { name: /Lo âu \/ Bồn chồn/ });
+    fireEvent.click(groupRadio);
+    expect(groupRadio).toBeChecked();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
+
+    // Step 2 should display words matching the selected emotion group
+    expect(
+      await screen.findByRole('heading', { name: '2. Gọi tên cụ thể hơn' })
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Hồi hộp/ }));
+    fireEvent.click(screen.getByRole('checkbox', { name: /Áp lực/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
+
+    // Step 3: body sensations
+    expect(
+      await screen.findByRole('heading', { name: '3. Cơ thể đang báo hiệu điều gì?' })
+    ).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('checkbox', { name: /Vai hoặc cổ hơi căng cứng/ }));
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
+
+    // Step 4: related context
+    expect(
+      await screen.findByRole('heading', { name: '4. Điều gì liên quan đến cảm xúc này?' })
+    ).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/Điều liên quan lúc này/), {
+      target: { value: 'Ngày mai có bài kiểm tra nói tiếng Anh đầu giờ sáng.' },
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Tiếp tục' }));
+
+    // Summary & Save to Journal
+    expect(await screen.findByText(/Mình đang cảm thấy/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Lưu vào nhật ký' }));
+
+    expect(await screen.findByRole('link', { name: 'Mở Nhật ký' })).toBeInTheDocument();
+    expect(readStorageState().exerciseEntries).toHaveLength(1);
+    fireEvent.click(screen.getByRole('link', { name: 'Mở Nhật ký' }));
+    expect(await screen.findByRole('heading', { name: 'Nhật ký của bạn' })).toBeInTheDocument();
     expect(capturedErrors).toHaveLength(0);
     expect(capturedWarnings).toHaveLength(0);
   });

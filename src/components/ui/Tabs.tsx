@@ -51,10 +51,10 @@ export function Tabs<T extends string>({
             onClick={() => onChange(item.id)}
             onKeyDown={(e) => handleKeyDown(e, idx)}
             className={[
-              'min-h-[44px] rounded-sm px-4 py-2 text-sm font-medium transition-colors duration-150',
+              'min-h-[44px] cursor-pointer rounded-sm border px-4 py-2 text-sm font-medium transition-colors duration-150',
               selected
-                ? 'bg-primary text-[var(--on-primary)]'
-                : 'bg-sand/70 text-ink hover:bg-sand',
+                ? 'border-primary bg-primary text-[var(--on-primary)] shadow-soft'
+                : 'border-border-subtle bg-sand/70 text-ink hover:border-border-strong hover:bg-sand',
             ].join(' ')}
           >
             {item.label}

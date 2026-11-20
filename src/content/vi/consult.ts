@@ -25,35 +25,35 @@ export const consultContentVi: ConsultContent = {
   counselors: [
     {
       id: 'counselor-minh-thu',
-      name: 'Cô Minh Thư (mẫu)',
-      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng (mẫu)',
+      name: 'Cô Minh Thư',
+      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng',
       initials: 'MT',
       avatarTone: 'primary',
       focusAreas: ['Lo âu thuyết trình & thi cử', 'Áp lực học ngoại ngữ', 'Thích nghi năm nhất'],
       formats: ['in-person', 'online'],
-      bio: 'Đồng hành cùng sinh viên trong việc nhận diện suy nghĩ tự tạo áp lực và xây dựng nhịp học tập vừa sức (hồ sơ mẫu).',
+      bio: 'Đồng hành cùng sinh viên trong việc nhận diện suy nghĩ tự tạo áp lực và xây dựng nhịp học tập vừa sức.',
       status: 'placeholder',
     },
     {
       id: 'counselor-hoang-nam',
-      name: 'Thầy Hoàng Nam (mẫu)',
-      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng (mẫu)',
+      name: 'Thầy Hoàng Nam',
+      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng',
       initials: 'HN',
       avatarTone: 'secondary',
       focusAreas: ['Giao tiếp & làm việc nhóm', 'Cân bằng kỳ vọng gia đình', 'Kỹ năng quản lý căng thẳng'],
       formats: ['in-person', 'online'],
-      bio: 'Lắng nghe các băn khoăn về mối quan hệ bạn bè, nhóm học tập và định hướng cá nhân ở bậc đại học (hồ sơ mẫu).',
+      bio: 'Lắng nghe các băn khoăn về mối quan hệ bạn bè, nhóm học tập và định hướng cá nhân ở bậc đại học.',
       status: 'placeholder',
     },
     {
       id: 'counselor-lan-anh',
-      name: 'Cô Lan Anh (mẫu)',
-      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng (mẫu)',
+      name: 'Cô Lan Anh',
+      title: 'Giảng viên Khoa Tâm lý – Giáo dục Khai phóng',
       initials: 'LA',
       avatarTone: 'sand',
       focusAreas: ['Cảm xúc quá tải & mệt mỏi', 'Tự phê bình bản thân', 'Thói quen tự chăm sóc'],
       formats: ['online', 'in-person'],
-      bio: 'Hỗ trợ sinh viên chậm lại khi thấy cạn năng lượng và thực hành đối thoại tử tế hơn với chính mình (hồ sơ mẫu).',
+      bio: 'Hỗ trợ sinh viên chậm lại khi thấy cạn năng lượng và thực hành đối thoại tử tế hơn với chính mình.',
       status: 'placeholder',
     },
   ],
@@ -71,7 +71,7 @@ export const consultContentVi: ConsultContent = {
       createdAt: '2026-11-18T09:15:00+07:00',
       sampleReply: {
         counselorId: 'counselor-minh-thu',
-        counselorName: 'Cô Minh Thư (mẫu)',
+        counselorName: 'Cô Minh Thư',
         content:
           'Cảm giác hồi hộp trước khi nói ngoại ngữ rất phổ biến ở sinh viên. Khi quên một từ, đầu óc mình dễ phóng đại thành "cả lớp đang đánh giá". Bạn có thể thử bài tập Nhật ký suy nghĩ để tách giữa sự việc vấp một từ và khả năng chung của bản thân, hoặc đặt một buổi trao đổi thử nghiệm nhé.',
         suggestedExerciseId: 'thought-record',
@@ -85,13 +85,13 @@ export const consultContentVi: ConsultContent = {
         'Tuần này chia nhóm môn chuyên ngành nhưng nhóm bạn thân lại đủ người trước rồi. Mình cứ nghĩ hay là mọi người thấy mình làm việc không hợp.',
       topic: 'relationships',
       isAnonymous: false,
-      authorName: 'Minh Anh (mẫu)',
+      authorName: 'Minh Anh',
       isMine: false,
       isSampleSeed: true,
       createdAt: '2026-11-18T14:20:00+07:00',
       sampleReply: {
         counselorId: 'counselor-hoang-nam',
-        counselorName: 'Thầy Hoàng Nam (mẫu)',
+        counselorName: 'Thầy Hoàng Nam',
         content:
           'Cảm giác hụt hẫng khi chưa ghép được nhóm cùng bạn quen là rất dễ hiểu. Đôi khi việc chia nhóm chỉ phụ thuộc vào số lượng thành viên tối đa hoặc lịch học trùng nhau chứ chưa hẳn là đánh giá về bạn. Bạn thử bài Nhận diện sai lệch nhận thức để xem mình có đang suy diễn vội vàng không nhé.',
         suggestedExerciseId: 'distortion-spotter',
@@ -111,7 +111,7 @@ export const consultContentVi: ConsultContent = {
       createdAt: '2026-11-17T20:05:00+07:00',
       sampleReply: {
         counselorId: 'counselor-hoang-nam',
-        counselorName: 'Thầy Hoàng Nam (mẫu)',
+        counselorName: 'Thầy Hoàng Nam',
         content:
           'Mang theo kỳ vọng của gia đình bên cạnh khối lượng bài vở đại học dễ khiến bạn bị quá tải. Bạn có thể thử bài Tái cấu trúc suy nghĩ để phân tách phần mình kiểm soát được trong việc học hôm nay với nỗi lo làm người khác thất vọng.',
         suggestedExerciseId: 'thought-reframing',
@@ -125,13 +125,13 @@ export const consultContentVi: ConsultContent = {
         'Mình luyện nghe mỗi tối gần một tiếng nhưng bài kiểm tra vẫn chỉ quanh mức 6 điểm. Đôi lúc mình muốn bỏ cuộc vì thấy mình không có năng khiếu.',
       topic: 'study',
       isAnonymous: false,
-      authorName: 'Hải Đăng (mẫu)',
+      authorName: 'Hải Đăng',
       isMine: false,
       isSampleSeed: true,
       createdAt: '2026-11-17T15:30:00+07:00',
       sampleReply: {
         counselorId: 'counselor-minh-thu',
-        counselorName: 'Cô Minh Thư (mẫu)',
+        counselorName: 'Cô Minh Thư',
         content:
           'Sự chững lại ở giai đoạn đầu khi học ngoại ngữ mới khiến nhiều bạn dễ nản và tự gán nhãn "không có năng khiếu". Thử dùng bài Tái cấu trúc suy nghĩ để nhìn lại những phần bạn đã duy trì được suốt thời gian qua, đồng thời trao đổi thêm với giảng viên bộ môn về phương pháp nghe nhé.',
         suggestedExerciseId: 'thought-reframing',
@@ -151,7 +151,7 @@ export const consultContentVi: ConsultContent = {
       createdAt: '2026-11-16T17:10:00+07:00',
       sampleReply: {
         counselorId: 'counselor-lan-anh',
-        counselorName: 'Cô Lan Anh (mẫu)',
+        counselorName: 'Cô Lan Anh',
         content:
           'Khi tin nhắn bị "đã xem", tâm trí mình rất hay tự điền vào khoảng trống bằng nỗi lo bị ghét hoặc làm phiền. Thực tế bạn kia có thể đang vội di chuyển hoặc chưa kịp soạn câu trả lời. Bạn có thể làm nhanh bài Nhận diện sai lệch nhận thức để làm dịu bớt phần suy đoán này.',
         suggestedExerciseId: 'distortion-spotter',
@@ -165,13 +165,13 @@ export const consultContentVi: ConsultContent = {
         'Ngày nào cũng chạy deadline đến khuya, đến lúc đặt lưng xuống đầu vẫn quay cuồng chuyện ngày mai phải làm gì nên sáng dậy rất uể oải.',
       topic: 'anxiety-stress',
       isAnonymous: false,
-      authorName: 'Thanh Hà (mẫu)',
+      authorName: 'Thanh Hà',
       isMine: false,
       isSampleSeed: true,
       createdAt: '2026-11-16T10:00:00+07:00',
       sampleReply: {
         counselorId: 'counselor-lan-anh',
-        counselorName: 'Cô Lan Anh (mẫu)',
+        counselorName: 'Cô Lan Anh',
         content:
           'Khi đầu óc liên tục ở chế độ "chạy việc", cơ thể rất khó chuyển sang trạng thái nghỉ ngơi dù đã mệt. Bạn có thể viết ra giấy những việc ngày mai trước khi ngủ để bớt phải giữ trong đầu, hoặc thử bài Nhật ký suy nghĩ khi thấy lo âu dâng cao.',
         suggestedExerciseId: 'thought-record',
@@ -191,9 +191,9 @@ export const consultContentVi: ConsultContent = {
       createdAt: '2026-11-15T21:15:00+07:00',
       sampleReply: {
         counselorId: 'counselor-lan-anh',
-        counselorName: 'Cô Lan Anh (mẫu)',
+        counselorName: 'Cô Lan Anh',
         content:
-          'Nhịp chuyển sang sống một mình thường đi kèm cảm giác lạ lẫm vào buổi tối. Việc bạn nhận ra nỗi trống trải ấy là một tín hiệu tự nhiên để mình kết nối lại với bạn bè hoặc gia đình. Nếu muốn, bạn có thể thử đặt một lịch trò chuyện 1-1 mẫu để xem cách chia sẻ thêm.',
+          'Nhịp chuyển sang sống một mình thường đi kèm cảm giác lạ lẫm vào buổi tối. Việc bạn nhận ra nỗi trống trải ấy là một tín hiệu tự nhiên để mình kết nối lại với bạn bè hoặc gia đình. Nếu muốn, bạn có thể thử đặt một lịch trò chuyện 1-1 để chia sẻ thêm.',
         suggestedExerciseId: 'emotion-awareness',
         repliedAt: '2026-11-16T08:50:00+07:00',
       },
@@ -205,7 +205,7 @@ export const consultContentVi: ConsultContent = {
         'Thấy nhiều bạn quanh mình đã đi làm thêm đúng ngành từ sớm, còn mình vẫn chưa chắc muốn theo biên dịch hay giảng dạy.',
       topic: 'study',
       isAnonymous: false,
-      authorName: 'Tuấn Kiệt (mẫu)',
+      authorName: 'Tuấn Kiệt',
       isMine: false,
       isSampleSeed: true,
       createdAt: '2026-11-19T08:30:00+07:00',
@@ -226,37 +226,37 @@ export const consultContentVi: ConsultContent = {
   replyTemplatesByTopic: {
     study: {
       counselorId: 'counselor-minh-thu',
-      counselorName: 'Cô Minh Thư (mẫu)',
+      counselorName: 'Cô Minh Thư',
       content:
-        'Cảm ơn bạn đã chia sẻ thẳng thắn về áp lực học tập hiện tại. Khi kỳ vọng và khối lượng bài vở dồn lại, mình rất dễ tự đánh giá khắt khe với bản thân. Bạn có thể thử bài Tái cấu trúc suy nghĩ để nhìn lại phần việc nào nằm trong tầm kiểm soát ngay tuần này, hoặc đặt lịch hẹn mẫu để trao đổi kỹ hơn nhé (phản hồi mẫu).',
+        'Cảm ơn bạn đã chia sẻ thẳng thắn về áp lực học tập hiện tại. Khi kỳ vọng và khối lượng bài vở dồn lại, mình rất dễ tự đánh giá khắt khe với bản thân. Bạn có thể thử bài Tái cấu trúc suy nghĩ để nhìn lại phần việc nào nằm trong tầm kiểm soát ngay tuần này, hoặc đặt lịch hẹn để trao đổi kỹ hơn nhé.',
       suggestedExerciseId: 'thought-reframing',
     },
     relationships: {
       counselorId: 'counselor-hoang-nam',
-      counselorName: 'Thầy Hoàng Nam (mẫu)',
+      counselorName: 'Thầy Hoàng Nam',
       content:
-        'Những vướng mắc trong giao tiếp với bạn bè hay nhóm học tập thường khiến mình suy nghĩ rất nhiều. Trước khi tự trách mình hoặc đoán ý người khác, bạn thử đi qua bài Nhận diện sai lệch nhận thức để xem góc nhìn khách quan hơn nhé. Bạn cũng có thể thử luồng đặt lịch 1-1 mô phỏng nếu muốn chuẩn bị cho một cuộc trò chuyện thẳng thắn (phản hồi mẫu).',
+        'Những vướng mắc trong giao tiếp với bạn bè hay nhóm học tập thường khiến mình suy nghĩ rất nhiều. Trước khi tự trách mình hoặc đoán ý người khác, bạn thử đi qua bài Nhận diện sai lệch nhận thức để xem góc nhìn khách quan hơn nhé. Bạn cũng có thể thử đặt lịch 1-1 nếu muốn chuẩn bị cho một cuộc trò chuyện thẳng thắn.',
       suggestedExerciseId: 'distortion-spotter',
     },
     'anxiety-stress': {
       counselorId: 'counselor-minh-thu',
-      counselorName: 'Cô Minh Thư (mẫu)',
+      counselorName: 'Cô Minh Thư',
       content:
-        'Cảm ơn bạn đã dừng lại viết ra điều đang khiến mình căng thẳng. Lo âu thường làm các kịch bản xấu trông rất thật trong đầu. Bạn có thể thử bài Nhật ký suy nghĩ để đặt suy nghĩ ấy cạnh các bằng chứng thực tế, và nếu cần thêm không gian lắng nghe, bạn có thể thử đặt lịch hẹn mẫu với giảng viên (phản hồi mẫu).',
+        'Cảm ơn bạn đã dừng lại viết ra điều đang khiến mình căng thẳng. Lo âu thường làm các kịch bản xấu trông rất thật trong đầu. Bạn có thể thử bài Nhật ký suy nghĩ để đặt suy nghĩ ấy cạnh các bằng chứng thực tế, và nếu cần thêm không gian lắng nghe, bạn có thể thử đặt lịch hẹn với giảng viên.',
       suggestedExerciseId: 'thought-record',
     },
     family: {
       counselorId: 'counselor-hoang-nam',
-      counselorName: 'Thầy Hoàng Nam (mẫu)',
+      counselorName: 'Thầy Hoàng Nam',
       content:
-        'Áp lực từ sự kỳ vọng của gia đình vừa có tình thương vừa dễ tạo cảm giác nặng vai. Bạn không cần phải giải quyết mọi mâu thuẫn chỉ trong một ngày. Thử dành vài phút với bài Tái cấu trúc suy nghĩ để tách giữa mong muốn của gia đình và bước đi vừa sức của bạn lúc này nhé (phản hồi mẫu).',
+        'Áp lực từ sự kỳ vọng của gia đình vừa có tình thương vừa dễ tạo cảm giác nặng vai. Bạn không cần phải giải quyết mọi mâu thuẫn chỉ trong một ngày. Thử dành vài phút với bài Tái cấu trúc suy nghĩ để tách giữa mong muốn của gia đình và bước đi vừa sức của bạn lúc này nhé.',
       suggestedExerciseId: 'thought-reframing',
     },
     other: {
       counselorId: 'counselor-lan-anh',
-      counselorName: 'Cô Lan Anh (mẫu)',
+      counselorName: 'Cô Lan Anh',
       content:
-        'Cảm ơn bạn đã tin tưởng ghi lại suy nghĩ của mình ở đây. Đôi khi chỉ riêng việc gọi tên điều đang làm mình bận lòng đã giúp đầu óc nhẹ hơn một chút. Bạn có thể thử bài Nhật ký suy nghĩ để sắp xếp lại dòng suy nghĩ hiện tại hoặc xem qua danh sách giảng viên mẫu để thử đặt lịch hẹn 1-1 (phản hồi mẫu).',
+        'Cảm ơn bạn đã tin tưởng ghi lại suy nghĩ của mình ở đây. Đôi khi chỉ riêng việc gọi tên điều đang làm mình bận lòng đã giúp đầu óc nhẹ hơn một chút. Bạn có thể thử bài Nhật ký suy nghĩ để sắp xếp lại dòng suy nghĩ hiện tại hoặc xem qua danh sách giảng viên để thử đặt lịch hẹn 1-1.',
       suggestedExerciseId: 'thought-record',
     },
   },

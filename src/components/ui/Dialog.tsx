@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from './Button';
+import { CloseIcon } from './Icons';
 
 export interface DialogProps {
   open: boolean;
@@ -114,9 +115,10 @@ export function Dialog({
               variant="quiet"
               onClick={onClose}
               aria-label={t('common.close')}
-              className="!px-3 !py-1 text-xs"
+              title={t('common.close')}
+              className="!min-w-[44px] !px-2.5 !py-2 text-ink hover:bg-sand"
             >
-              {t('common.close')}
+              <CloseIcon size={18} />
             </Button>
           )}
         </div>

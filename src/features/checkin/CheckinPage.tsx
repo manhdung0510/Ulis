@@ -4,11 +4,11 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonStyles';
 import { Card } from '@/components/ui/Card';
+import { ArrowRightIcon, CheckIcon, ClockIcon } from '@/components/ui/Icons';
 import { TextArea } from '@/components/ui/TextArea';
 import { Tag } from '@/components/ui/Tag';
 import { useToast } from '@/components/ui/useToast';
 import { EmotionIcon } from '@/components/illustration/EmotionIcons';
-import { InkDivider } from '@/components/illustration/InkDivider';
 import { checkinContentVi } from '@/content/vi/checkin';
 import { checkinContentEn } from '@/content/en/checkin';
 import { exercisesMetaVi } from '@/content/vi/exercisesMeta';
@@ -119,7 +119,6 @@ export default function CheckinPage() {
     setIsEditing(true);
   };
 
-  // Build 7-day timeline from 6 days ago to today in Asia/Ho_Chi_Minh
   const today = new Date();
   const last7Days = Array.from({ length: 7 }, (_, idx) => {
     const dateKey = addDaysDateKey(today, idx - 6);
@@ -137,7 +136,7 @@ export default function CheckinPage() {
     : [];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <header className="space-y-2">
         <h1 className="font-serif text-3xl font-semibold text-ink">
           {t('checkin.pageTitle')}
@@ -145,313 +144,327 @@ export default function CheckinPage() {
         <p className="max-w-2xl text-base text-muted">{t('checkin.pageIntro')}</p>
       </header>
 
-      {loading ? (
-        <Card tone="sand">
-          <p className="text-sm text-muted" role="status">
-            {t('common.loading')}
-          </p>
-        </Card>
-      ) : activeResult ? (
-        <Card tone="surface" className="space-y-5">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="flex items-center gap-3.5">
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-sand text-primary">
-                <EmotionIcon
-                  emotion={activeResult.emotion}
-                  label={t(`emotions.${activeResult.emotion}`)}
-                  size={34}
-                />
-              </div>
-              <div className="space-y-1">
-                <Tag tone="secondary">{t(`emotions.${activeResult.emotion}`)}</Tag>
-                <h2 className="font-serif text-xl font-semibold text-ink">
-                  {t('checkin.resultHeading')}
-                </h2>
-                <p className="text-xs text-muted">
-                  {t(`checkin.intensityDescriptions.${activeResult.intensity}`)}
-                </p>
-              </div>
-            </div>
-
-            <Button variant="secondary" onClick={handleStartEdit}>
-              {t('checkin.editToday')}
-            </Button>
-          </div>
-
-          <p className="rounded-sm border border-border-subtle bg-sand/60 p-4 text-base leading-relaxed text-ink">
-            {checkinContent.warmResponses[activeResult.emotion]}
-          </p>
-
-          {activeResult.note && (
-            <div className="space-y-1">
-              <p className="text-xs font-medium text-muted">{t('checkin.noteLabel')}</p>
-              <p className="rounded-sm border border-border-subtle bg-paper px-3.5 py-2.5 text-sm text-ink">
-                {activeResult.note}
+      <div className="grid items-start gap-6 lg:grid-cols-[1.35fr_0.95fr]">
+        {/* Primary check-in form / result */}
+        <div>
+          {loading ? (
+            <Card tone="sand">
+              <p className="text-sm text-muted" role="status">
+                {t('common.loading')}
               </p>
-            </div>
-          )}
+            </Card>
+          ) : activeResult ? (
+            <Card tone="surface" className="space-y-5">
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="flex items-center gap-3.5">
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-border-subtle bg-sand text-primary">
+                    <EmotionIcon
+                      emotion={activeResult.emotion}
+                      label={t(`emotions.${activeResult.emotion}`)}
+                      size={34}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Tag tone="secondary">{t(`emotions.${activeResult.emotion}`)}</Tag>
+                    <h2 className="font-serif text-xl font-semibold text-ink">
+                      {t('checkin.resultHeading')}
+                    </h2>
+                    <p className="text-xs text-muted">
+                      {t(`checkin.intensityDescriptions.${activeResult.intensity}`)}
+                    </p>
+                  </div>
+                </div>
 
-          {suggestedExercises.length > 0 && !hideSuggestions && (
-            <div className="space-y-3 border-t border-border-subtle pt-4">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <h3 className="font-serif text-lg font-semibold text-ink">
-                  {t('checkin.suggestedTitle')}
-                </h3>
-                <button
-                  type="button"
-                  onClick={() => setHideSuggestions(true)}
-                  className="inline-flex min-h-[44px] items-center text-xs text-muted underline underline-offset-4 hover:text-ink"
-                >
-                  {t('checkin.skipSuggestion')}
-                </button>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2">
-                {suggestedExercises.map((exId) => {
-                  const meta = exercisesMeta.items[exId];
-                  return (
-                    <div
-                      key={exId}
-                      className="flex flex-col justify-between gap-3 rounded-sm border border-border-subtle bg-paper p-4"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="font-serif text-base font-semibold text-ink">
-                            {meta.title}
-                          </span>
-                          <span className="text-xs text-muted">
-                            {t('common.minutesShort', { minutes: meta.estimatedMinutes })}
-                          </span>
-                        </div>
-                        <p className="text-sm text-muted">{meta.shortDescription}</p>
-                      </div>
-                      <div>
-                        <Link to={`/bai-tap/${exId}`} className={buttonClasses('primary')}>
-                          {t('home.startExercise')}
-                        </Link>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-        </Card>
-      ) : (
-        <Card tone="surface">
-          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-            {/* 8 Emotions selector */}
-            <fieldset
-              className="space-y-3"
-              aria-describedby={emotionError ? emotionErrorId : undefined}
-            >
-              <legend id={emotionGroupId} className="text-sm font-medium text-ink">
-                {t('checkin.selectEmotionLabel')}
-              </legend>
-
-              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                {checkinContent.emotionOrder.map((emotionId) => {
-                  const checked = selectedEmotion === emotionId;
-                  const label = t(`emotions.${emotionId}`);
-                  return (
-                    <label
-                      key={emotionId}
-                      className={[
-                        'flex min-h-[76px] cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border p-3 text-center transition-colors duration-150',
-                        'focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2',
-                        checked
-                          ? 'border-primary bg-primary-soft/75 text-ink'
-                          : 'border-border-subtle bg-paper text-ink hover:border-border-strong hover:bg-sand/40',
-                      ].join(' ')}
-                    >
-                      <input
-                        type="radio"
-                        name="checkin-emotion"
-                        value={emotionId}
-                        checked={checked}
-                        onChange={() => {
-                          setSelectedEmotion(emotionId);
-                          setEmotionError('');
-                        }}
-                        className="sr-only"
-                      />
-                      <span className={checked ? 'text-primary' : 'text-ink'}>
-                        <EmotionIcon emotion={emotionId} label={label} size={28} decorative />
-                      </span>
-                      <span className="text-sm font-medium">{label}</span>
-                    </label>
-                  );
-                })}
-              </div>
-
-              {emotionError && (
-                <p id={emotionErrorId} role="status" aria-live="polite" className="text-sm text-primary">
-                  {emotionError}
-                </p>
-              )}
-            </fieldset>
-
-            {/* Intensity 1-5 */}
-            <fieldset className="space-y-3" aria-labelledby={intensityGroupId}>
-              <legend id={intensityGroupId} className="text-sm font-medium text-ink">
-                {t('checkin.intensityLabel')}
-              </legend>
-              <div className="grid grid-cols-1 gap-2 sm:grid-cols-5">
-                {INTENSITY_LEVELS.map((level) => {
-                  const checked = intensity === level;
-                  return (
-                    <label
-                      key={level}
-                      className={[
-                        'flex min-h-[44px] cursor-pointer items-center justify-center rounded-sm border px-3 py-2 text-center text-xs font-medium transition-colors duration-150',
-                        'focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2',
-                        checked
-                          ? 'border-primary bg-primary text-[var(--on-primary)]'
-                          : 'border-border-subtle bg-paper text-ink hover:border-border-strong hover:bg-sand/50',
-                      ].join(' ')}
-                    >
-                      <input
-                        type="radio"
-                        name="checkin-intensity"
-                        value={level}
-                        checked={checked}
-                        onChange={() => setIntensity(level)}
-                        className="sr-only"
-                      />
-                      <span>{t(`checkin.intensityDescriptions.${level}`)}</span>
-                    </label>
-                  );
-                })}
-              </div>
-            </fieldset>
-
-            {/* Optional note */}
-            <TextArea
-              label={`${t('checkin.noteLabel')} (${t('common.optional')})`}
-              placeholder={t('checkin.notePlaceholder')}
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              maxLength={280}
-              rows={3}
-              showSupportHint
-            />
-
-            <div className="flex flex-wrap items-center gap-3">
-              <Button type="submit" variant="primary" loading={saving}>
-                {todayRecord ? t('checkin.updateButton') : t('checkin.saveButton')}
-              </Button>
-              {todayRecord && (
-                <Button variant="quiet" onClick={() => setIsEditing(false)} disabled={saving}>
-                  {t('common.cancel')}
+                <Button variant="secondary" onClick={handleStartEdit}>
+                  {t('checkin.editToday')}
                 </Button>
+              </div>
+
+              <p className="rounded-sm border border-border-subtle bg-sand/60 p-4 text-base leading-relaxed text-ink">
+                {checkinContent.warmResponses[activeResult.emotion]}
+              </p>
+
+              {activeResult.note && (
+                <div className="space-y-1">
+                  <p className="text-xs font-medium text-muted">{t('checkin.noteLabel')}</p>
+                  <p className="rounded-sm border border-border-subtle bg-paper px-3.5 py-2.5 text-sm text-ink">
+                    {activeResult.note}
+                  </p>
+                </div>
               )}
-            </div>
-          </form>
-        </Card>
-      )}
 
-      <InkDivider />
+              {suggestedExercises.length > 0 && !hideSuggestions && (
+                <div className="space-y-3 border-t border-border-subtle pt-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h3 className="font-serif text-lg font-semibold text-ink">
+                      {t('checkin.suggestedTitle')}
+                    </h3>
+                    <Button
+                      variant="quiet"
+                      onClick={() => setHideSuggestions(true)}
+                      className="!px-3 text-xs"
+                    >
+                      {t('checkin.skipSuggestion')}
+                    </Button>
+                  </div>
 
-      {/* 7-day history */}
-      <section aria-label={t('checkin.historyTitle')} className="space-y-4">
-        <div className="space-y-1">
-          <h2 className="font-serif text-xl font-semibold text-ink">
-            {t('checkin.historyTitle')}
-          </h2>
-          <p className="text-xs text-muted">{t('checkin.historyLegend')}</p>
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    {suggestedExercises.map((exId) => {
+                      const meta = exercisesMeta.items[exId];
+                      return (
+                        <div
+                          key={exId}
+                          className="flex flex-col justify-between gap-3 rounded-sm border border-border-subtle bg-paper p-4"
+                        >
+                          <div className="space-y-1">
+                            <div className="flex items-center justify-between gap-2">
+                              <span className="font-serif text-base font-semibold text-ink">
+                                {meta.title}
+                              </span>
+                              <span className="inline-flex shrink-0 items-center gap-1 text-xs text-muted">
+                                <ClockIcon size={13} />
+                                <span>{t('common.minutesShort', { minutes: meta.estimatedMinutes })}</span>
+                              </span>
+                            </div>
+                            <p className="text-sm text-muted">{meta.shortDescription}</p>
+                          </div>
+                          <div>
+                            <Link to={`/bai-tap/${exId}`} className={buttonClasses('primary')}>
+                              <span>{t('home.startExercise')}</span>
+                              <ArrowRightIcon size={16} />
+                            </Link>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </Card>
+          ) : (
+            <Card tone="surface">
+              <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+                {/* 8 Emotions selector */}
+                <fieldset
+                  className="space-y-3"
+                  aria-describedby={emotionError ? emotionErrorId : undefined}
+                >
+                  <legend id={emotionGroupId} className="text-sm font-medium text-ink">
+                    {t('checkin.selectEmotionLabel')}
+                  </legend>
+
+                  <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+                    {checkinContent.emotionOrder.map((emotionId) => {
+                      const checked = selectedEmotion === emotionId;
+                      const label = t(`emotions.${emotionId}`);
+                      return (
+                        <label
+                          key={emotionId}
+                          className={[
+                            'relative flex min-h-[82px] cursor-pointer flex-col items-center justify-center gap-2 rounded-sm border p-3 text-center transition-all duration-150',
+                            'focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2',
+                            checked
+                              ? 'border-primary bg-primary-soft/80 text-ink shadow-soft'
+                              : 'border-border-strong/60 bg-paper text-ink shadow-soft hover:border-primary/70 hover:bg-sand/45',
+                          ].join(' ')}
+                        >
+                          <input
+                            type="radio"
+                            name="checkin-emotion"
+                            value={emotionId}
+                            checked={checked}
+                            onChange={() => {
+                              setSelectedEmotion(emotionId);
+                              setEmotionError('');
+                            }}
+                            className="sr-only"
+                          />
+                          {checked && (
+                            <span
+                              aria-hidden="true"
+                              className="absolute right-1.5 top-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[var(--on-primary)]"
+                            >
+                              <CheckIcon size={11} />
+                            </span>
+                          )}
+                          <span className={checked ? 'text-primary' : 'text-ink'}>
+                            <EmotionIcon emotion={emotionId} label={label} size={28} decorative />
+                          </span>
+                          <span className="text-sm font-medium">{label}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+
+                  {emotionError && (
+                    <p id={emotionErrorId} role="status" aria-live="polite" className="text-sm text-primary">
+                      {emotionError}
+                    </p>
+                  )}
+                </fieldset>
+
+                {/* Intensity 1-5 */}
+                <fieldset className="space-y-3" aria-labelledby={intensityGroupId}>
+                  <legend id={intensityGroupId} className="text-sm font-medium text-ink">
+                    {t('checkin.intensityLabel')}
+                  </legend>
+                  <div className="grid grid-cols-1 gap-2 sm:grid-cols-5">
+                    {INTENSITY_LEVELS.map((level) => {
+                      const checked = intensity === level;
+                      return (
+                        <label
+                          key={level}
+                          className={[
+                            'flex min-h-[44px] cursor-pointer items-center justify-center gap-1.5 rounded-sm border px-3 py-2 text-center text-xs font-medium transition-all duration-150',
+                            'focus-within:ring-2 focus-within:ring-[var(--focus-ring)] focus-within:ring-offset-2',
+                            checked
+                              ? 'border-primary bg-primary text-[var(--on-primary)] shadow-soft'
+                              : 'border-border-strong/60 bg-paper text-ink shadow-soft hover:border-primary/70 hover:bg-sand/50',
+                          ].join(' ')}
+                        >
+                          <input
+                            type="radio"
+                            name="checkin-intensity"
+                            value={level}
+                            checked={checked}
+                            onChange={() => setIntensity(level)}
+                            className="sr-only"
+                          />
+                          {checked && <CheckIcon size={13} />}
+                          <span>{t(`checkin.intensityDescriptions.${level}`)}</span>
+                        </label>
+                      );
+                    })}
+                  </div>
+                </fieldset>
+
+                {/* Optional note */}
+                <TextArea
+                  label={`${t('checkin.noteLabel')} (${t('common.optional')})`}
+                  placeholder={t('checkin.notePlaceholder')}
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  maxLength={280}
+                  rows={3}
+                  showSupportHint
+                />
+
+                <div className="flex flex-wrap items-center gap-3">
+                  <Button type="submit" variant="primary" loading={saving}>
+                    {todayRecord ? t('checkin.updateButton') : t('checkin.saveButton')}
+                  </Button>
+                  {todayRecord && (
+                    <Button variant="quiet" onClick={() => setIsEditing(false)} disabled={saving}>
+                      {t('common.cancel')}
+                    </Button>
+                  )}
+                </div>
+              </form>
+            </Card>
+          )}
         </div>
 
-        <Card tone="sand" className="space-y-4">
-          <div className="overflow-x-auto">
-            <svg
-              viewBox="0 0 350 64"
-              className="mx-auto block w-full max-w-md"
-              role="img"
-              aria-label={t('checkin.historyTitle')}
-            >
-              <line
-                x1="25"
-                y1="24"
-                x2="325"
-                y2="24"
-                stroke="var(--border-subtle)"
-                strokeWidth="1.5"
-                strokeDasharray="3 3"
-              />
-              {last7Days.map((day, idx) => {
-                const cx = 25 + idx * 50;
-                const hasEntry = Boolean(day.record);
-                const emotionLabel = day.record ? t(`emotions.${day.record.emotion}`) : '';
-                return (
-                  <g key={day.dateKey}>
-                    <title>
-                      {hasEntry
-                        ? `${day.shortLabel}: ${emotionLabel} (${day.record?.intensity}/5)`
-                        : day.shortLabel}
-                    </title>
-                    <circle
-                      cx={cx}
-                      cy="24"
-                      r="11"
-                      fill={hasEntry ? 'var(--accent-primary)' : 'var(--bg-surface)'}
-                      stroke={hasEntry ? 'var(--accent-primary)' : 'var(--border-strong)'}
-                      strokeWidth="1.5"
-                      strokeDasharray={hasEntry ? undefined : '3 2'}
-                    />
-                    {hasEntry && (
-                      <circle cx={cx} cy="24" r="3.5" fill="var(--on-primary)" />
-                    )}
-                    <text
-                      x={cx}
-                      y="52"
-                      textAnchor="middle"
-                      fontSize="11"
-                      fill="var(--text-muted)"
-                    >
-                      {day.shortLabel}
-                    </text>
-                  </g>
-                );
-              })}
-            </svg>
-          </div>
+        {/* 7-day history column on desktop */}
+        <aside aria-label={t('checkin.historyTitle')} className="space-y-4">
+          <Card tone="sand" className="space-y-4">
+            <div className="space-y-1">
+              <h2 className="font-serif text-xl font-semibold text-ink">
+                {t('checkin.historyTitle')}
+              </h2>
+              <p className="text-xs text-muted">{t('checkin.historyLegend')}</p>
+            </div>
 
-          {recentRecords.length === 0 ? (
-            <p className="text-center text-sm text-muted">{t('checkin.historyEmpty')}</p>
-          ) : (
-            <ul className="divide-y divide-border-subtle border-t border-border-subtle pt-2">
-              {recentRecords.map((item) => (
-                <li
-                  key={item.id}
-                  className="flex flex-wrap items-start justify-between gap-3 py-3 text-sm"
-                >
-                  <div className="flex items-start gap-3">
-                    <span className="mt-0.5 text-primary">
-                      <EmotionIcon
-                        emotion={item.emotion}
-                        label={t(`emotions.${item.emotion}`)}
-                        size={22}
+            <div className="overflow-x-auto">
+              <svg
+                viewBox="0 0 350 64"
+                className="mx-auto block w-full max-w-md"
+                role="img"
+                aria-label={t('checkin.historyTitle')}
+              >
+                <line
+                  x1="25"
+                  y1="24"
+                  x2="325"
+                  y2="24"
+                  stroke="var(--border-subtle)"
+                  strokeWidth="1.5"
+                  strokeDasharray="3 3"
+                />
+                {last7Days.map((day, idx) => {
+                  const cx = 25 + idx * 50;
+                  const hasEntry = Boolean(day.record);
+                  const emotionLabel = day.record ? t(`emotions.${day.record.emotion}`) : '';
+                  return (
+                    <g key={day.dateKey}>
+                      <title>
+                        {hasEntry
+                          ? `${day.shortLabel}: ${emotionLabel} (${day.record?.intensity}/5)`
+                          : day.shortLabel}
+                      </title>
+                      <circle
+                        cx={cx}
+                        cy="24"
+                        r="11"
+                        fill={hasEntry ? 'var(--accent-primary)' : 'var(--bg-surface)'}
+                        stroke={hasEntry ? 'var(--accent-primary)' : 'var(--border-strong)'}
+                        strokeWidth="1.5"
+                        strokeDasharray={hasEntry ? undefined : '3 2'}
                       />
-                    </span>
-                    <div className="space-y-0.5">
-                      <p className="font-medium text-ink">
-                        {t(`emotions.${item.emotion}`)}{' '}
-                        <span className="font-normal text-muted">
-                          · {t('home.todayIntensity', { level: item.intensity })}
-                        </span>
-                      </p>
-                      {item.note && <p className="text-xs text-muted">{item.note}</p>}
+                      {hasEntry && (
+                        <circle cx={cx} cy="24" r="3.5" fill="var(--on-primary)" />
+                      )}
+                      <text
+                        x={cx}
+                        y="52"
+                        textAnchor="middle"
+                        fontSize="11"
+                        fill="var(--text-muted)"
+                      >
+                        {day.shortLabel}
+                      </text>
+                    </g>
+                  );
+                })}
+              </svg>
+            </div>
+
+            {recentRecords.length === 0 ? (
+              <p className="text-center text-sm text-muted">{t('checkin.historyEmpty')}</p>
+            ) : (
+              <ul className="divide-y divide-border-subtle border-t border-border-subtle pt-2">
+                {recentRecords.map((item) => (
+                  <li
+                    key={item.id}
+                    className="flex flex-wrap items-start justify-between gap-3 py-3 text-sm"
+                  >
+                    <div className="flex items-start gap-3">
+                      <span className="mt-0.5 text-primary">
+                        <EmotionIcon
+                          emotion={item.emotion}
+                          label={t(`emotions.${item.emotion}`)}
+                          size={22}
+                        />
+                      </span>
+                      <div className="space-y-0.5">
+                        <p className="font-medium text-ink">
+                          {t(`emotions.${item.emotion}`)}{' '}
+                          <span className="font-normal text-muted">
+                            · {t('home.todayIntensity', { level: item.intensity })}
+                          </span>
+                        </p>
+                        {item.note && <p className="text-xs text-muted">{item.note}</p>}
+                      </div>
                     </div>
-                  </div>
-                  <span className="text-xs text-muted">
-                    {formatDisplayDate(item.dateKey, lang)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
-      </section>
+                    <span className="text-xs text-muted">
+                      {formatDisplayDate(item.dateKey, lang)}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+        </aside>
+      </div>
     </div>
   );
 }

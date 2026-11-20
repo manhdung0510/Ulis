@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/Button';
 import { buttonClasses } from '@/components/ui/buttonStyles';
 import { Card } from '@/components/ui/Card';
+import { ArrowRightIcon, PrinterIcon } from '@/components/ui/Icons';
 import { Tag } from '@/components/ui/Tag';
 import { EmotionIcon } from '@/components/illustration/EmotionIcons';
 import { distortionsVi } from '@/content/vi/distortions';
@@ -244,7 +245,8 @@ export function ExerciseSummaryView({
             )}
             {saved && (
               <Link to="/nhat-ky" className={buttonClasses('primary')}>
-                {t('exercises.goToJournal')}
+                <span>{t('exercises.goToJournal')}</span>
+                <ArrowRightIcon size={16} />
               </Link>
             )}
             {onRedo && (
@@ -253,7 +255,8 @@ export function ExerciseSummaryView({
               </Button>
             )}
             <Button variant="quiet" onClick={() => window.print()}>
-              {t('exercises.printSummary')}
+              <PrinterIcon size={16} />
+              <span>{t('exercises.printSummary')}</span>
             </Button>
           </div>
         )}

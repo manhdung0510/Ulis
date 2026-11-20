@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Choice, type ChoiceOption } from '@/components/ui/Choice';
+import { CheckIcon, ChevronDownIcon } from '@/components/ui/Icons';
 import { TextArea } from '@/components/ui/TextArea';
 import { Card } from '@/components/ui/Card';
 import { EmotionIcon } from '@/components/illustration/EmotionIcons';
@@ -83,7 +84,10 @@ export function ExerciseStepRenderer({
                 <span className={checked ? 'text-primary' : 'text-ink'}>
                   <EmotionIcon emotion={emotionId} label={label} size={24} decorative />
                 </span>
-                <span className="text-xs font-medium">{label}</span>
+                <span className="inline-flex items-center gap-1 text-xs font-medium">
+                  {checked && <CheckIcon size={13} className="text-primary" />}
+                  <span>{label}</span>
+                </span>
               </label>
             );
           })}
@@ -172,9 +176,10 @@ export function ExerciseStepRenderer({
             type="button"
             aria-expanded={exampleOpen}
             onClick={() => setExampleOpen((prev) => !prev)}
-            className="inline-flex min-h-[44px] items-center text-xs font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
+            className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-sm border border-border-subtle bg-paper px-3 py-1.5 text-xs font-medium text-primary transition-colors hover:border-border-strong hover:bg-sand/60"
           >
-            {exampleOpen ? t('common.collapseExample') : t('common.expandExample')}
+            <span>{exampleOpen ? t('common.collapseExample') : t('common.expandExample')}</span>
+            <ChevronDownIcon size={15} rotated={exampleOpen} />
           </button>
           {exampleOpen && (
             <div className="mt-2 rounded-sm border border-border-subtle bg-sand/70 p-3.5 text-sm leading-relaxed text-ink">
@@ -305,32 +310,51 @@ export function ExerciseStepRenderer({
       )}
 
       {step.type === 'choice-multi' && (
-        <Choice
-          mode="multi"
-          name={step.id}
-          options={resolvedOptions}
-          value={Array.isArray(answers[step.answerKey]) ? (answers[step.answerKey] as string[]) : []}
-          onChange={(nextList) => {
-            if (step.answerKey === 'distortionIds') {
-              const previous = Array.isArray(answers[step.answerKey])
-                ? (answers[step.answerKey] as string[])
-                : [];
-              if (!previous.includes('unsure') && nextList.includes('unsure')) {
-                onUpdateAnswer(step.answerKey, ['unsure']);
-                return;
+        <div className="space-y-2.5">
+          <div className="flex items-center justify-between text-xs text-muted">
+            <span>
+              {step.maxChoices
+                ? t('exercises.selectedCount', {
+                    count: Array.isArray(answers[step.answerKey])
+                      ? (answers[step.answerKey] as string[]).length
+                      : 0,
+                    max: step.maxChoices,
+                  })
+                : t('exercises.selectedSimpleCount', {
+                    count: Array.isArray(answers[step.answerKey])
+                      ? (answers[step.answerKey] as string[]).length
+                      : 0,
+                  })}
+            </span>
+          </div>
+          <Choice
+            mode="multi"
+            name={step.id}
+            options={resolvedOptions}
+            maxSelections={step.maxChoices}
+            value={Array.isArray(answers[step.answerKey]) ? (answers[step.answerKey] as string[]) : []}
+            onChange={(nextList) => {
+              if (step.answerKey === 'distortionIds') {
+                const previous = Array.isArray(answers[step.answerKey])
+                  ? (answers[step.answerKey] as string[])
+                  : [];
+                if (!previous.includes('unsure') && nextList.includes('unsure')) {
+                  onUpdateAnswer(step.answerKey, ['unsure']);
+                  return;
+                }
+                if (previous.includes('unsure') && nextList.length > 1) {
+                  onUpdateAnswer(
+                    step.answerKey,
+                    nextList.filter((item) => item !== 'unsure')
+                  );
+                  return;
+                }
               }
-              if (previous.includes('unsure') && nextList.length > 1) {
-                onUpdateAnswer(
-                  step.answerKey,
-                  nextList.filter((item) => item !== 'unsure')
-                );
-                return;
-              }
-            }
-            onUpdateAnswer(step.answerKey, nextList);
-          }}
-          error={error || undefined}
-        />
+              onUpdateAnswer(step.answerKey, nextList);
+            }}
+            error={error || undefined}
+          />
+        </div>
       )}
 
       {step.type === 'intro' && step.dynamicDistortionReflection && (
