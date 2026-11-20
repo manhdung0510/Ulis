@@ -137,7 +137,7 @@ export default function HomePage() {
                         <div>
                           <Link
                             to={`/bai-tap/${exId}`}
-                            className={buttonClasses('quiet', '!min-h-[38px] !px-3 text-xs text-primary')}
+                            className={buttonClasses('quiet', '!px-3 text-xs text-primary')}
                           >
                             {t('home.startExercise')}
                           </Link>
@@ -212,7 +212,7 @@ export default function HomePage() {
           </h2>
           <Link
             to="/huong-dan"
-            className="inline-flex min-h-[36px] items-center text-sm font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
+            className="inline-flex min-h-[44px] items-center text-sm font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
           >
             {t('home.notebookBlockLink')}
           </Link>

@@ -58,15 +58,17 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex flex-wrap gap-1.5">
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label={t('consult.questionTopicLabel')}>
           <Button
-            variant={filter === 'all' ? 'primary' : 'secondary'}
+            variant={filter === 'all' ? 'primary' : 'quiet'}
+            aria-pressed={filter === 'all'}
             onClick={() => setFilter('all')}
           >
             {t('consult.filterAllTopics')}
           </Button>
           <Button
-            variant={filter === 'mine' ? 'primary' : 'secondary'}
+            variant={filter === 'mine' ? 'primary' : 'quiet'}
+            aria-pressed={filter === 'mine'}
             onClick={() => setFilter('mine')}
           >
             {t('consult.filterMine')}
@@ -75,6 +77,7 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
             <Button
               key={topic}
               variant={filter === topic ? 'primary' : 'quiet'}
+              aria-pressed={filter === topic}
               onClick={() => setFilter(topic)}
             >
               {t(`consult.topics.${topic}`)}
@@ -90,7 +93,7 @@ export function QaTab({ posts, nowMs, onOpenAsk, onDeletePost }: QaTabProps) {
       {visiblePosts.length === 0 ? (
         <EmptyState
           title={t('consult.emptyPostsFilter')}
-          body={t('consult.pageIntro')}
+          body={filter === 'mine' ? t('consult.emptyMineBody') : t('consult.emptyTopicBody')}
           action={
             <Button variant="primary" onClick={onOpenAsk}>
               {t('consult.askButton')}

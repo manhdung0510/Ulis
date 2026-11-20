@@ -13,7 +13,7 @@ export function SupportHintLink() {
     <div className="mt-1.5 text-right">
       <Link
         to="/ho-tro"
-        className="inline-flex min-h-[32px] items-center text-xs text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary"
+        className="inline-flex min-h-[44px] items-center text-xs text-muted underline decoration-border-strong underline-offset-4 transition-colors hover:text-primary"
       >
         {t('common.needSupportNow')}
       </Link>

@@ -200,7 +200,7 @@ export default function CheckinPage() {
                 <button
                   type="button"
                   onClick={() => setHideSuggestions(true)}
-                  className="inline-flex min-h-[36px] items-center text-xs text-muted underline underline-offset-4 hover:text-ink"
+                  className="inline-flex min-h-[44px] items-center text-xs text-muted underline underline-offset-4 hover:text-ink"
                 >
                   {t('checkin.skipSuggestion')}
                 </button>

@@ -101,14 +101,14 @@ export function AppointmentsTab({
               <Button
                 variant="secondary"
                 onClick={() => downloadAppointmentIcs(item, lang)}
-                className="!min-h-[38px] !px-3 text-xs"
+                className="!px-3 text-xs"
               >
                 {t('consult.downloadIcs')}
               </Button>
               <Button
                 variant="quiet"
                 onClick={() => setCancelTarget(item)}
-                className="!min-h-[38px] !px-3 text-xs text-primary"
+                className="!px-3 text-xs text-primary"
               >
                 {t('consult.cancelAppointment')}
               </Button>
@@ -117,7 +117,7 @@ export function AppointmentsTab({
             <Button
               variant="secondary"
               onClick={() => onRebook(item)}
-              className="!min-h-[38px] !px-3 text-xs"
+              className="!px-3 text-xs"
             >
               {t('consult.rebookAppointment')}
             </Button>

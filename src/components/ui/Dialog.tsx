@@ -114,7 +114,7 @@ export function Dialog({
               variant="quiet"
               onClick={onClose}
               aria-label={t('common.close')}
-              className="!min-h-[36px] !px-2.5 !py-1 text-xs"
+              className="!px-3 !py-1 text-xs"
             >
               {t('common.close')}
             </Button>

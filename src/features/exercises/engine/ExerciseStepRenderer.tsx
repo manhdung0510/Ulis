@@ -172,7 +172,7 @@ export function ExerciseStepRenderer({
             type="button"
             aria-expanded={exampleOpen}
             onClick={() => setExampleOpen((prev) => !prev)}
-            className="inline-flex min-h-[36px] items-center text-xs font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
+            className="inline-flex min-h-[44px] items-center text-xs font-medium text-primary underline underline-offset-4 hover:text-primary-hover"
           >
             {exampleOpen ? t('common.collapseExample') : t('common.expandExample')}
           </button>

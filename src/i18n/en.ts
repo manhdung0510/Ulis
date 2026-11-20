@@ -265,6 +265,8 @@ export const en = {
     slotUnavailableError: 'That slot is unavailable or already booked by you. Please pick another time.',
     studentNameRequiredError: 'Please enter your name or nickname.',
     emptyPostsFilter: 'No questions in this filter yet.',
+    emptyMineBody: 'You have not posted any questions on this device yet. Click "Ask a question" to try the simulated Q&A flow.',
+    emptyTopicBody: 'There are no questions under this topic right now. Try another topic or post a sample question.',
     tryExerciseLabel: 'Suggested exercise:',
     studentNamePlaceholder: 'For example: Thao Vy',
   },

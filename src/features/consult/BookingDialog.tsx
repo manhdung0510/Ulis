@@ -191,6 +191,9 @@ export function BookingDialog({
               onClick={() => {
                 setConfirmed(null);
                 setSlotTime('');
+                setNote('');
+                setDemoAck(false);
+                setErrorMsg('');
                 setStep(1);
               }}
             >

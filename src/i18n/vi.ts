@@ -265,6 +265,8 @@ export const vi = {
     slotUnavailableError: 'Khung giờ này vừa kín hoặc bạn đã đặt rồi. Bạn chọn giờ khác nhé.',
     studentNameRequiredError: 'Bạn hãy nhập tên hoặc biệt danh của mình.',
     emptyPostsFilter: 'Chưa có câu hỏi nào trong mục này.',
+    emptyMineBody: 'Bạn chưa đăng câu hỏi nào trên thiết bị này. Bấm "Đặt câu hỏi" để thử luồng hỏi – đáp mô phỏng.',
+    emptyTopicBody: 'Hiện chưa có câu hỏi nào thuộc chủ đề này. Bạn có thể chọn chủ đề khác hoặc tự đặt câu hỏi.',
     tryExerciseLabel: 'Gợi ý bài tập kèm theo:',
     studentNamePlaceholder: 'Ví dụ: Thảo Vy',
   },

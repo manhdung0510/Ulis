@@ -158,6 +158,11 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
     expect(await screen.findByRole('heading', { name: 'Cổng tham vấn ULIS (mô phỏng)' })).toBeInTheDocument();
     expect(screen.getByText('Bản demo: nội dung không được gửi tới giảng viên thật.')).toBeInTheDocument();
 
+    // Empty state on "Bài của tôi" filter before posting
+    fireEvent.click(screen.getByRole('button', { name: 'Bài của tôi' }));
+    expect(await screen.findByText('Chưa có câu hỏi nào trong mục này.')).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: 'Tất cả chủ đề' }));
+
     // Ask question flow
     fireEvent.click(await screen.findByRole('button', { name: 'Đặt câu hỏi' }));
     expect(await screen.findByText('Đặt câu hỏi tham vấn (mô phỏng)')).toBeInTheDocument();

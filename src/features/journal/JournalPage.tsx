@@ -190,14 +190,14 @@ export default function JournalPage() {
                         <Button
                           variant="secondary"
                           onClick={() => setSelectedItem(item)}
-                          className="!min-h-[38px] !px-3 text-xs"
+                          className="!px-3 text-xs"
                         >
                           {t('journal.viewDetail')}
                         </Button>
                         <Button
                           variant="quiet"
                           onClick={() => setItemToDelete(item)}
-                          className="!min-h-[38px] !px-3 text-xs text-primary"
+                          className="!px-3 text-xs text-primary"
                         >
                           {t('journal.deleteItem')}
                         </Button>
@@ -236,14 +236,14 @@ export default function JournalPage() {
                       <Button
                         variant="secondary"
                         onClick={() => setSelectedItem(item)}
-                        className="!min-h-[38px] !px-3 text-xs"
+                        className="!px-3 text-xs"
                       >
                         {t('journal.viewDetail')}
                       </Button>
                       <Button
                         variant="quiet"
                         onClick={() => setItemToDelete(item)}
-                        className="!min-h-[38px] !px-3 text-xs text-primary"
+                        className="!px-3 text-xs text-primary"
                       >
                         {t('journal.deleteItem')}
                       </Button>

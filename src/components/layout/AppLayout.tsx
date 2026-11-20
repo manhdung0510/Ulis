@@ -137,14 +137,14 @@ export function AppLayout({ children }: { children: ReactNode }) {
               {FEATURES.supportPage && (
                 <Link
                   to="/ho-tro"
-                  className="inline-flex min-h-[36px] items-center underline underline-offset-4 hover:text-primary"
+                  className="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:text-primary"
                 >
                   {t('footer.supportLink')}
                 </Link>
               )}
               <Link
                 to="/huong-dan"
-                className="inline-flex min-h-[36px] items-center underline underline-offset-4 hover:text-primary"
+                className="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:text-primary"
               >
                 {t('footer.guideLink')}
               </Link>
@@ -153,7 +153,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
                   href={FEEDBACK_FORM_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-[36px] items-center underline underline-offset-4 hover:text-primary"
+                  className="inline-flex min-h-[44px] items-center underline underline-offset-4 hover:text-primary"
                 >
                   {t('footer.feedbackLink')}
                 </a>
@@ -161,7 +161,7 @@ export function AppLayout({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 onClick={() => setDeleteDialogOpen(true)}
-                className="inline-flex min-h-[36px] items-center text-left text-primary underline underline-offset-4 hover:text-primary-hover"
+                className="inline-flex min-h-[44px] items-center text-left text-primary underline underline-offset-4 hover:text-primary-hover"
               >
                 {t('footer.deleteDataLink')}
               </button>
