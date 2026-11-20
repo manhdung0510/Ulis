@@ -38,12 +38,12 @@ npx tsc --noEmit
 
 ## 2. Đưa lên đường link công khai (Deploy)
 
-Dự án cấu hình `base: './'` và dùng `HashRouter`, nên chạy ổn định trên mọi đường dẫn con (subpath) mà không bị lỗi 404 khi tải lại trang.
+- **Link GitHub Pages cố định của dự án:** https://manhdung0510.github.io/Ulis/
+- Dự án cấu hình `base: './'` và dùng `HashRouter`, nên chạy ổn định trên mọi đường dẫn con (subpath) mà không bị lỗi 404 khi tải lại trang.
 
-### Cách 1: GitHub Pages (tự động)
-1. Đẩy mã nguồn lên nhánh `main` của repository GitHub.
-2. Vào **Settings → Pages**, ở mục **Source** chọn **GitHub Actions**.
-3. Workflow `.github/workflows/deploy.yml` sẽ tự động build và xuất bản mỗi khi có thay đổi trên `main`.
+### Cách 1: GitHub Pages (tự động cập nhật)
+1. Thiết lập một lần duy nhất trên GitHub: vào **Settings → Pages**, ở mục **Source** chọn **GitHub Actions**.
+2. Từ đó về sau, mỗi lần commit và push lên nhánh `main`, workflow `.github/workflows/deploy.yml` sẽ tự động chạy `npm ci`, kiểm tra kiểu, `npm run build` và cập nhật trực tiếp lên `https://manhdung0510.github.io/Ulis/`.
 
 ### Cách 2: Vercel hoặc Netlify
 1. Import repository GitHub vào Vercel hoặc Netlify.
@@ -69,6 +69,7 @@ Dự án cấu hình `base: './'` và dùng `HashRouter`, nên chạy ổn đị
 
 ## 4. Tài liệu kỹ thuật liên quan
 
+- [AGENTS.md](AGENTS.md): Quy tắc làm việc chuẩn của dự án (hỏi lại khi chưa chắc 100%, báo cáo có bằng chứng, tự động commit/push lên `main` để cập nhật GitHub Pages).
 - [docs/CONTENT.md](docs/CONTENT.md): Bản đồ toàn bộ tệp nội dung và quy ước trạng thái (`placeholder` / `draft-needs-review` / `final`).
 - [docs/HANDOFF.md](docs/HANDOFF.md): Mô tả các service trong `src/services/` và danh sách API cần có khi chuyển sang backend thật.
 - [docs/DECISIONS.md](docs/DECISIONS.md): Nhật ký các quyết định thiết kế & kỹ thuật.
