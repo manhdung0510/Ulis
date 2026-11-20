@@ -1,0 +1,48 @@
+/*
+ * Design tokens cho dự án Họa
+ * Nhóm có thể chỉnh sửa bảng màu, phông chữ, bo góc và đổ bóng tại đây
+ * mà không cần sửa code trong các component.
+ */
+
+:root {
+  /* Màu nền giấy ấm và bề mặt */
+  --bg-paper: #FAF6EF;
+  --bg-sand: #F0E8DA;
+  --bg-surface: #FFFDF9;
+
+  /* Màu mực và chữ */
+  --text-ink: #2B2623;
+  --text-muted: #5C534D;
+
+  /* Tối đa 2 màu nhấn: đất nung đậm & xanh lá xám đậm */
+  --accent-primary: #A24A30;
+  --accent-primary-hover: #8B3D26;
+  --accent-primary-soft: #F4E4DE;
+  --on-primary: #FFFDF9;
+
+  --accent-secondary: #3A5A4B;
+  --accent-secondary-hover: #2E483C;
+  --accent-secondary-soft: #E3ECE7;
+  --on-secondary: #FFFDF9;
+
+  /* Đường kẻ vẽ tay / viền */
+  --border-subtle: #D8CDBE;
+  --border-strong: #8A7E72;
+  --focus-ring: #A24A30;
+
+  /* Kiểu chữ */
+  --font-sans: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
+
+  /* Bo góc (2 mức) */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+
+  /* Đổ bóng (2 mức rất nhẹ) */
+  --shadow-soft: 0 1px 2px rgba(43, 38, 35, 0.06);
+  --shadow-lifted: 0 4px 12px rgba(43, 38, 35, 0.08);
+
+  /* Thời gian chuyển động */
+  --motion-fast: 150ms;
+  --motion-base: 220ms;
+}
