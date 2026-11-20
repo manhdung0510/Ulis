@@ -26,17 +26,6 @@ export const en = {
     disclaimer:
       'Họa is a self-help tool and does not replace professional counseling or clinical treatment.',
     consultNotice: 'Demo version: content is not sent to real counselors.',
-    onboardingTitle: 'Before you begin with Họa',
-    onboardingPoint1Title: '1. Interactive demo experience',
-    onboardingPoint1Body:
-      'Consultation replies and appointments in this build are simulated sample data so you can explore how Họa works.',
-    onboardingPoint2Title: '2. Data stays on your device',
-    onboardingPoint2Body:
-      'Your mood check-ins, journal notes, and questions are stored only in this browser and never sent to a server.',
-    onboardingPoint3Title: '3. Self-help, not professional care',
-    onboardingPoint3Body:
-      'Họa is a self-help tool and does not replace professional counseling or clinical treatment. Support contacts are always one tap away.',
-    onboardingConfirm: 'I understand',
   },
   footer: {
     supportLink: 'Need support',

@@ -26,17 +26,6 @@ export const vi = {
     disclaimer:
       'Họa là công cụ tự hỗ trợ, không thay thế tư vấn hoặc điều trị chuyên môn.',
     consultNotice: 'Bản demo: nội dung không được gửi tới giảng viên thật.',
-    onboardingTitle: 'Trước khi bạn bắt đầu với Họa',
-    onboardingPoint1Title: '1. Đây là bản dùng thử tương tác',
-    onboardingPoint1Body:
-      'Các câu trả lời tham vấn và lịch hẹn trong bản này là dữ liệu mô phỏng để bạn trải nghiệm luồng sử dụng.',
-    onboardingPoint2Title: '2. Dữ liệu chỉ nằm trên thiết bị của bạn',
-    onboardingPoint2Body:
-      'Mọi check-in, bài viết nhật ký và câu hỏi bạn tạo đều được lưu trong trình duyệt này, không gửi lên máy chủ.',
-    onboardingPoint3Title: '3. Không thay thế hỗ trợ chuyên môn',
-    onboardingPoint3Body:
-      'Họa là công cụ tự hỗ trợ, không thay thế tư vấn hoặc điều trị chuyên môn. Khi cần, bạn luôn có thể mở trang Hỗ trợ.',
-    onboardingConfirm: 'Mình đã đọc và hiểu',
   },
   footer: {
     supportLink: 'Hỗ trợ khi cần',

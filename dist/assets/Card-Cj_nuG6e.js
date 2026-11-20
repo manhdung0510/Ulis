@@ -1,0 +1,1 @@
+import{j as a}from"./index-xA1452yq.js";const b={surface:"bg-surface border-border-subtle shadow-soft",sand:"bg-sand border-border-subtle",paper:"bg-paper border-border-subtle"};function u({children:r,tone:e="surface",padded:s=!0,className:o="",...d}){return a.jsx("div",{className:["rounded-md border",b[e],s?"p-5 sm:p-6":"",o].join(" "),...d,children:r})}export{u as C};

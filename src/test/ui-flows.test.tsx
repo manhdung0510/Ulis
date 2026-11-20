@@ -43,18 +43,12 @@ describe('end-to-end UI flows across P0 and P1 pages', () => {
     console.warn = originalConsoleWarn;
   });
 
-  it('completes onboarding, check-in, Thought Record 5-step flow, journal inspection, and delete all data', async () => {
+  it('completes check-in, Thought Record 5-step flow, journal inspection, and delete all data without blocking modal', async () => {
     render(<App />);
 
-    // 1. Onboarding dialog appears on first visit
-    expect(await screen.findByText('Trước khi bạn bắt đầu với Họa')).toBeInTheDocument();
-    fireEvent.click(screen.getByRole('button', { name: 'Mình đã đọc và hiểu' }));
-    await waitFor(() => {
-      expect(screen.queryByText('Trước khi bạn bắt đầu với Họa')).not.toBeInTheDocument();
-    });
-
-    // 2. Navigate to Check-in
+    // 1. Navigate to Check-in directly without an interrupting first-visit modal
     const checkinCta = await screen.findByRole('link', { name: /Check-in hôm nay|Cập nhật check-in/ });
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     fireEvent.click(checkinCta);
     expect(await screen.findByRole('heading', { name: 'Check-in cảm xúc hôm nay' })).toBeInTheDocument();
 

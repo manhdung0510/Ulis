@@ -8,11 +8,8 @@ import { changeAppLanguage } from '@/i18n';
 import {
   clearAllUserDataInStorage,
   isUsingMemoryFallback,
-  readStorageState,
-  updateStorageState,
 } from '@/services/storage';
 import { useToast } from '@/components/ui/useToast';
-import { OnboardingDialog } from './OnboardingDialog';
 import { DeleteAllDataDialog } from './DeleteAllDataDialog';
 import {
   CheckinIcon,
@@ -29,9 +26,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [onboardingOpen, setOnboardingOpen] = useState<boolean>(
-    () => !readStorageState().onboardingDismissed
-  );
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [memoryFallback, setMemoryFallback] = useState(() => isUsingMemoryFallback());
 
@@ -48,14 +42,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
     { to: '/tham-van', label: t('nav.consult'), icon: ConsultIcon, end: false },
     { to: '/nhat-ky', label: t('nav.journal'), icon: JournalIcon, end: false },
   ];
-
-  const handleAcknowledgeOnboarding = () => {
-    updateStorageState((prev) => ({
-      ...prev,
-      onboardingDismissed: true,
-    }));
-    setOnboardingOpen(false);
-  };
 
   const handleToggleLanguage = () => {
     const nextLang: AppLanguage = currentLang === 'vi' ? 'en' : 'vi';
@@ -216,7 +202,6 @@ export function AppLayout({ children }: { children: ReactNode }) {
         </ul>
       </nav>
 
-      <OnboardingDialog open={onboardingOpen} onAcknowledge={handleAcknowledgeOnboarding} />
       <DeleteAllDataDialog
         open={deleteDialogOpen}
         onClose={() => setDeleteDialogOpen(false)}
